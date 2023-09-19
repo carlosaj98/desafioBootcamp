@@ -3,15 +3,15 @@ import { LandingPage, FormPage, ResultPage } from "./pages"
 
 const router = createBrowserRouter([
     {
-        path: "/test",
+        path: "/",
         element: <LandingPage />,
     },
     {
-        path: "/test/form",
+        path: "/form",
         element: <FormPage />,
     },
     {
-        path: "/test/result",
+        path: "/result",
         element: <ResultPage />,
     },
 ])
