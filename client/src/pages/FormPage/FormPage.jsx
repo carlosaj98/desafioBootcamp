@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import {
   Container,
   Typography,
@@ -49,7 +49,17 @@ function FormPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState(Array(questions.length).fill([]));
   const [isInstructionsModalOpen, setIsInstructionsModalOpen] = useState(false);
+  const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true);
 
+
+  useEffect(() => {
+    const currentAnswer = answers[currentQuestion];
+    if (currentAnswer && currentAnswer.length === questions[currentQuestion].options.length) {
+      setIsNextButtonDisabled(false);
+    } else {
+      setIsNextButtonDisabled(true);
+    }
+  }, [currentQuestion, answers]);
 
   const handleNextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
@@ -150,6 +160,7 @@ function FormPage() {
                   variant="contained"
                   color="primary"
                   onClick={handleNextQuestion}
+                  disabled={isNextButtonDisabled}
                 >
                   Resultados
                 </Button>
@@ -158,7 +169,8 @@ function FormPage() {
                   variant="contained"
                   color="primary"
                   onClick={handleNextQuestion}
-                  disabled={currentQuestion === questions.length - 1}
+                  disabled={isNextButtonDisabled}
+                  
                 >
                   Siguiente
                 </Button>
