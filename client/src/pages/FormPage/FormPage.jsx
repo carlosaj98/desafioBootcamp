@@ -7,6 +7,9 @@ import {
   ListItemText,
   Button,
   CssBaseline,
+  Modal,
+  Dialog,
+  DialogTitle
 } from "@mui/material";
 
 const questions = [
@@ -45,6 +48,8 @@ const questions = [
 function FormPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState(Array(questions.length).fill([]));
+  const [isInstructionsModalOpen, setIsInstructionsModalOpen] = useState(false);
+
 
   const handleNextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
@@ -76,16 +81,39 @@ function FormPage() {
     updatedAnswers[currentQuestion] = currentAnswer;
     setAnswers(updatedAnswers);
   };
+  const cleanQuestion = () => {
+    const updatedAnswers = [...answers];
+    if (updatedAnswers[currentQuestion]) {
+      updatedAnswers[currentQuestion] = [];
+      setAnswers(updatedAnswers);
+    }
+  };
+  const handleInstructionsModalOpen = () => {
+    setIsInstructionsModalOpen(true);
+  };
+
+  const handleInstructionsModalClose = () => {
+    setIsInstructionsModalOpen(false);
+  };
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="sm" sx={{ marginTop: "80px" }}>
       <CssBaseline />
       <div>
         {currentQuestion < questions.length && (
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom sx={{ display: "flex", justifyContent: "right", gap: "35%" }}>
             {`${currentQuestion + 1}/${questions.length}`}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleInstructionsModalOpen}
+              sx={{ marginLeft: "10px" }}
+            >
+              ?
+            </Button>
           </Typography>
         )}
+
         {currentQuestion < questions.length && (
           <>
             <Typography variant="body1">{questions[currentQuestion].text}</Typography>
@@ -101,7 +129,7 @@ function FormPage() {
                 </ListItem>
               ))}
             </List>
-            <div>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Button
                 variant="contained"
                 color="primary"
@@ -109,6 +137,13 @@ function FormPage() {
                 disabled={currentQuestion === 0}
               >
                 Anterior
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={cleanQuestion}
+              >
+                Limpiar
               </Button>
               {currentQuestion === questions.length - 1 ? (
                 <Button
@@ -149,6 +184,45 @@ function FormPage() {
           </>
         )}
       </div>
+      <Modal
+        open={isInstructionsModalOpen}
+        onClose={handleInstructionsModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        sx={{ width: "100vw" }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            background: "white",
+            padding: "20px",
+            gap: "10px"
+          }}
+        >
+          <Typography variant="h6" id="modal-modal-title" gutterBottom>
+            Instrucciones del Test
+          </Typography>
+          <ul variant="body1" id="modal-modal-description">
+            <li>La primera opción que pulses recibe 6 puntos, y continúas en orden descendente hasta 1</li>
+            <li>Puedes deshacer tu elección haciendo click sobre el término a cambiar</li>
+            <li> Puedes deshacer todas tus respuestas de una pregunta haciendo click en el icono</li>
+            <li>Puedes deshacer todas tus respuestas de una pregunta haciendo click en el icono</li>
+            <li>Puedes volver a la pregunta anterior pulsando el icono</li>
+            <li>Sólo puedes pasar a la siguiente pregunta cuando hayas puntuado todos los términos de la pantalla.</li>
+          </ul>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleInstructionsModalClose}
+            sx={{ marginTop: "10px" }}
+          >
+            Cerrar
+          </Button>
+        </div>
+      </Modal>
     </Container>
   );
 }
