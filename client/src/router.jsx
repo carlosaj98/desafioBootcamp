@@ -1,7 +1,5 @@
 import { createBrowserRouter } from "react-router-dom"
-import { LandingPage } from "./pages"
-import FormPage from "./pages/FormPage"
-import ResultPage from "./pages/ResultPage"
+import { LandingPage, FormPage, ResultPage } from "./pages"
 
 const router = createBrowserRouter([
     {
