@@ -3,8 +3,10 @@ import { styled } from "@mui/material"
 const MainContainer = styled("div")({
   width: "100vw",
   height: "100vh",
-  backgroundColor: "#34495E",
-  color: "white",
+  backgroundImage: "url(/bg_landingPage.png)",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+  color: "black",
 
   "#content-container":{
     display: "flex",
@@ -12,18 +14,18 @@ const MainContainer = styled("div")({
     flexDirection: "column",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    gap: "24px"
+    gap: "24px",
   },
 
   main:{
+    padding: "64px",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "flex-start",
     gap: "24px"
   },
 
   h1: {
-    textAlign: "center",
     marginTop: "100px",
     fontSize: "4rem",
     fontWeight: "bold",
@@ -31,22 +33,33 @@ const MainContainer = styled("div")({
   },
 
   "#title-description": {
-      textAlign: "center",
+      textAlign: "left",
       fontSize: "1.3rem",
+      maxWidth: "700px",
+      marginBottom: "24px"
   },
 
-  button:{
-    backgroundColor: " #00C3C0",
-    borderRadius: "10px"
+  "#content-container button":{
+    backgroundColor: "#00C3C0",
+    borderRadius: "25px",
+    padding: "18px 100px",
+    fontSize: "1.15rem",
   },
 
   footer:{
     width: "100%",
     height: "fit-content",
     display: "flex",
-    justifyContent: "space-between",
-    padding: "16px"
-  }
+    justifyContent: "center",
+    gap: "16px",
+    padding: "6px",
+    backgroundColor: "#00C3C0",
+  },
+
+  "footer p":{
+    color: "white",
+    fontWeight: "bold",
+  },
 
 })
 
