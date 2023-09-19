@@ -1,0 +1,19 @@
+{
+    "culturalFitData": {
+      "labels": ["Categoría 1", "Categoría 2", "Categoría 3"],
+      "values": [10, 20, 30],
+      "colors": ["red", "green", "blue"]
+    },
+    "kpisData": {
+      "labels": ["KPIS 1", "KPIS 2", "KPIS 3"],
+      "values": [40, 30, 20],
+      "colors": ["orange", "purple", "pink"]
+    },
+    "desiredCulturalFitData": {
+      "labels": ["Categoría A", "Categoría B", "Categoría C"],
+      "values": [15, 25, 35],
+      "colors": ["yellow", "cyan", "magenta"]
+    }
+  }
+
+  
