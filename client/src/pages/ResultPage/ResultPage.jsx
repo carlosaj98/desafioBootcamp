@@ -1,11 +1,13 @@
-import { Container, Stack, Box, Button } from "@mui/material";
+import { Container, Stack, Box, Button, Typography } from "@mui/material";
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 import { Chart } from "chart.js";
-
+// import Style from "./Style"
 function ResultPage() {
   return (
-    <Container
+    // <Style.MainContainer id="main-container">
+    <Container id= "content-container"
       sx={{
+       backgroundColor: "9ED2BE",
         border: "5px solid red",
         display: "flex",
         width: "100vw",
@@ -14,7 +16,7 @@ function ResultPage() {
         justifyContent: "flex-start",
       }}
     >
-      <Stack
+      <Stack id= "logoStack"
         height="6vh"
         border={"5px solid black"}
         direction={"row"}
@@ -40,12 +42,15 @@ function ResultPage() {
         flexDirection={"row"}
         height="40vh"
       >
-        <Box border={"5px solid blue"} flex={1}></Box>
+        <Box border={"5px solid blue"} justifyContent={"center"} alignContent={"center"} flex={1}>
+        <Typography> Ajuste cultural</Typography>
+          </Box>
         <Box border={"5px solid blue"} flex={1}>
-          Grafico1
+          <Typography> KPIS</Typography>
+         
         </Box>
         <Box border={"5px solid blue"} flex={1}>
-          Grafico1
+        <Typography> Ajuste cultural deseado </Typography>
         </Box>
       </Stack>
       <Stack
@@ -65,10 +70,11 @@ function ResultPage() {
         alignItems="center"
         justifyContent={"center"}
       >
-        <Button style={{ borderRadius: '12px' }} variant="contained"  startIcon={< DownloadRoundedIcon />}>Download</Button>
+        <Button style={{ borderRadius: '12px' }} variant="contained"  startIcon={< DownloadRoundedIcon />}>Descarga tus resultados</Button>
       
       </Stack>
     </Container>
+    // </Style.MainContainer>
   );
 }
 
