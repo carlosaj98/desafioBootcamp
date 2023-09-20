@@ -8,11 +8,11 @@ import "@fontsource/montserrat/400.css"
 
 const cssNormalize = {
   ":root": {
-    "bg-color": "white",
-    "primary-color": "#00C3C0",
-    "secondary-color": "#34495E",
-    "primary-font": "Montserrat",
-    "secondary-font": "Rubik",
+    "--bg-color": "white",
+    "--primary-color": "#00C3C0",
+    "--secondary-color": "#34495E",
+    "--primary-font": "Montserrat",
+    "--secondary-font": "Rubik",
   },
   
   "*": {
