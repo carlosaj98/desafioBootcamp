@@ -1,4 +1,4 @@
-import { Container, Stack, Box, Button, Typography } from "@mui/material";
+import { Container, Stack, Box, Button, Typography , CircularProgress,Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import { Chart } from "chart.js/auto";
 import staticData from "./data.json";
@@ -6,6 +6,13 @@ import staticData from "./data.json";
 import { useEffect } from "react";
 
 // import Style from "./Style";
+
+
+const data = [
+  { id: 1, name: 'Ejemplo 1', score: 90 },
+  { id: 2, name: 'Ejemplo 2', score: 85 },
+  { id: 3, name: 'Ejemplo 3', score: 92 },]
+
 
 function ResultPage() {
   const { culturalFitData, kpisData, desiredCulturalFitData } = staticData;
@@ -37,9 +44,6 @@ function ResultPage() {
     createChart("desiredCulturalFitChart", desiredCulturalFitData, "radar");
   }, [culturalFitData, kpisData, desiredCulturalFitData]);
 
-
-
-  
   return (
     // <Style.MainContainer id="main-container">
     <Stack
@@ -61,7 +65,7 @@ function ResultPage() {
       </Stack>
       <Stack
         id="buttonStack"
-        border="5px solid blue"
+        // border="5px solid blue"
         display="flex"
         height="5vh"
         flexDirection="row"
@@ -85,8 +89,8 @@ function ResultPage() {
         height="40vh"
       >
         <Box
-        // class="chart-container"
-        // style={{ position: "relative" }}
+          // class="chart-container"
+          // style={{ position: "relative" }}
           border={"5px solid blue"}
           flex={1}
           marginLeft={{ sm: "10px", xs: "0px" }}
@@ -117,13 +121,32 @@ function ResultPage() {
       >
         <Box
           display={"flex"}
-          border="5px solid black"
-          width={{ sm: "50%", xs: "100%" }}
+          // border="5px solid black"
+          width="50%"
           justifyContent={"center"}
           alignItems={"center"}
           height={"40vh"}
         >
-          cuadricula resultados
+     <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell>Nombre</TableCell>
+                  <TableCell>Puntuación</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.map((row) => (
+                  <TableRow key={row.id}>
+                    <TableCell>{row.id}</TableCell>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.score}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Box>
       </Stack>
       <Stack
