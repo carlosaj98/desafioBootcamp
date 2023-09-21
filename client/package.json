@@ -16,6 +16,7 @@
     "@fontsource/rubik": "^5.0.12",
     "@mui/icons-material": "^5.14.9",
     "@mui/material": "^5.14.10",
+    "ag-grid-react": "^30.1.0",
     "axios": "^1.5.0",
     "chart.js": "^4.4.0",
     "chartjs-plugin-datalabels": "^2.2.0",
