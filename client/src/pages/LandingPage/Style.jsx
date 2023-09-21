@@ -19,10 +19,7 @@ const MainContainer = styled("div")({
   },
 
   main: {
-    marginTop: "200px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-evenly",
+    marginTop:"20vh",
     gap: "64px",
   },
 
@@ -37,27 +34,40 @@ const MainContainer = styled("div")({
   },
 
   h1: {
-    marginTop: "100px",
     fontSize: "5rem",
     fontWeight: "bold",
     color: "var(--primary-color)",
     fontFamily:"var(--secondary-font)",
   },
 
-  "#title-description": {
-    fontFamily:"var(--primary-font)",
+  "h1 span":{
+    color: "var(--secondary-color)",
+  },
+
+  "#first-description": {
+    fontFamily:"var(--secondary-font)",
+    color:"var(--secondary-color)",
     textAlign: "left",
     fontSize: "1.5rem",
+    marginBottom: "24px",
+  },
+
+  "#second-description":{
+    fontFamily:"var(--primary-font)",
+    color:"var(--secondary-color)",
+    textAlign: "left",
+    fontSize: "1.2rem",
     maxWidth: "800px",
     marginBottom: "24px",
   },
 
   "#content-container button": {
     backgroundColor: "var(--primary-color)",
-    borderRadius: "25px",
+    borderRadius: "30px",
     padding: "18px 100px",
-    fontFamily:"var(--primary-font)",
+    fontFamily:"var(--secondary-font)",
     fontSize: "1.15rem",
+
   },
 
   footer: {
