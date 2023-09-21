@@ -18,15 +18,7 @@ const MainContainer = styled("div")({
     justifyContent:"space-between",
   },
 
-  main: {
-    marginTop:"20vh",
-    gap: "64px",
-  },
 
-  "#logo":{
-    width: "400px",
-    height: "400px"
-  },
 
   "#logo img":{
     width: "100%",

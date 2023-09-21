@@ -1,16 +1,30 @@
 import { Container, Button, Typography, Link, Stack, Box } from "@mui/material"
+import { useMediaQuery } from "@mui/material"
 import { Link as LinkReact } from "react-router-dom"
 import Styled from "./Style"
 function LandingPage() {
+  const isMobileScreen = useMediaQuery("(max-width: 600px)")
+  const isTabletScreen = useMediaQuery("(max-width: 900px)")
+
   return (
     <Styled.MainContainer id="principal-container">
-      <Container id="content-container" maxWidth="100vw" disableGutters>
+      <Container id="content-container" maxWidth="100vw">
         <Stack
           component="main"
           alignItems="center"
-          sx={{ flexDirection: { xl: "row", md: "column" } }}
+          marginTop="20vh"
+          sx={{
+            flexDirection: { lg: "row", md: "column" },
+            marginTop: { lg: "20vh", md: "5vh" },
+          }}
         >
-          <Box component="section" maxWidth= "800px">
+          <Stack
+            component="section"
+            sx={{
+              maxWidth: { lg: "800px", md: "80%" },
+              alignItems: { lg: "flex-start", md: "center" },
+            }}
+          >
             <Typography component="h1">
               Cultural<span>Fit</span>
             </Typography>
@@ -21,17 +35,24 @@ function LandingPage() {
               neque at orci aliquam consequat. Duis mattis erat augue.
             </Typography>
             <Typography component="p" id="second-description">
-              Duis nec suscipit erat, vitae placerat purus. Etiam eu
-              neque at orci aliquam consequat. Duis mattis erat augue, volutpat
-              efficitur lorem commodo eu.
+              Duis nec suscipit erat, vitae placerat purus. Etiam eu neque at
+              orci aliquam consequat. Duis mattis erat augue, volutpat efficitur
+              lorem commodo eu.
             </Typography>
             <LinkReact to="/form">
               <Button variant="contained" sx={{ width: "fit-content" }}>
                 Iniciar el test
               </Button>
             </LinkReact>
-          </Box>
-          <Box id="logo">
+          </Stack>
+          <Box
+            id="logo"
+            sx={{
+              order: { lg: "1", md: "-1" },
+              width: { lg: "400px", md: "200px" },
+              height: { lg: "400px", md: "200px" },
+            }}
+          >
             <img src="../../../assets/logoCF.png" alt="" />
           </Box>
         </Stack>
