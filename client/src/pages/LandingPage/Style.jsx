@@ -10,21 +10,30 @@ const MainContainer = styled("div")({
 
 
   "#content-container": {
-    display: "flex",
     height: "100%",
+    width: "100%",
+    display: "flex",
     flexDirection: "column",
-    flexWrap: "wrap",
     alignItems: "center",
     justifyContent:"space-between",
-    gap: "24px",
   },
 
   main: {
-    padding: "64px",
+    marginTop: "200px",
     display: "flex",
-    flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
+    gap: "64px",
+  },
+
+  "#logo":{
+    width: "400px",
+    height: "400px"
+  },
+
+  "#logo img":{
+    width: "100%",
+    height: "auto"
   },
 
   h1: {
@@ -70,13 +79,7 @@ const MainContainer = styled("div")({
     fontFamily: "var(--primary-font)",
   },
 
-  "#logo":{
-    width: "400px",
-    height: "400px",
-    backgroundImage: "url(/logoCF.png)",
-    backgroundRepeat: "no-repeat",
-    backgroundSize:"cover",
-  }
+
 })
 
 export default { MainContainer }
