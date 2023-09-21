@@ -15,112 +15,83 @@ import {
 } from "@mui/material";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import { Chart } from "chart.js/auto";
-import staticData from "./data.json";
-
 import { useEffect } from "react";
-
+import React, { useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import { AgGridReact } from 'ag-grid-react';
 // import Style from "./Style";
 
-const data = [
-  { id: 1, name: "Ejemplo 1", score: 90 },
-  { id: 2, name: "Ejemplo 2", score: 85 },
-  { id: 3, name: "Ejemplo 3", score: 92 },
+const data = [{
+  "ARQind": [
+    17.46,
+    14.29,
+    22.22,
+    18.25,
+    12.7,
+    15.08
+  ],
+  "arqTITULO": [
+    "People",
+    "Innovation",
+    "Goals",
+    "Norms",
+    "Digital",
+    "ESG"
+  ],
+  "arqTEXTO": [
+    "Mentalidad enfocada en el bienestar y el desarrollo de las personas, el mantenimiento de un clima laboral positivo y unas buenas relaciones de trabajo. Ello la lleva a que la cohesión y la satisfacción propia y de los demás primen sobre otros objetivos. Áreas de alto encaje: Recursos Humanos (RRHH), Servicio al Cliente, Comunicaciones Corporativas, Relaciones Públicas.",
+    "Mentalidad dinámica, creativa, autónoma, orientada a la innovación, y que presente tolerancia al riesgo y atrevimiento a la hora de actuar. Promueve la generación de ideas innovadoras, el cambio positivo y la disposición para tomar riesgos. Áreas de alto encaje: Desarrollo de Productos , Investigación y Desarrollo (I+D), Tecnología de la Información (TI), Consultoría.",
+    "Mentalidad caracterizada por una orientación clara hacia los resultados, la excelencia y competitidad. Resuelve problemas de manera pragmática con ambición y habilidades de liderazgo. Enfoque en el logro de metas y objetivos, impulsando el éxito y la eficacia en el trabajo. Áreas de alto encaje: Ventas, Marketing, Desarrollo Empresarial, Gestión de Proyectos.",
+    "Mentalidad orientada hacia el cumplimiento de las normas y la burocracia, enfatizando la seguridad, la predictibilidad, el orden y el control. Especial apego a la existencia de normas estrictas, procedimientos, manuales, y por mantener una noción muy estricta de la jerarquía. Áreas de alto encaje: Finanzas y Contabilidad, Jurídico y Cumplimiento, Control de Calidad, Compras.",
+    "Mentalidad de gran apertura al cambio,  analítica y que enfatiza la adaptación al cliente mediante el aprendizaje continuo y la tolerancia al fallo. Ello la lleva a fomentar y valorar especialmente la cooperación y disposición tantio propia como de sus colaboradores para compartir conocimientos. Áreas de alto encaje: Transformación Digital, Sistemas, Experiencia del Usuario (UX), Diseño de Interfaz de Usuario (UI).",
+    "Mentalidad caracterizada por un alto compromiso para con la responsabilidad social y la sostenibilidad. Ello la conduce a esforzarse para lograr unos objetivos sociales y a generar un impacto positivo en el medio ambiente y la sociedad. Áreas de alto encaje: Desarrollo Sostenible, Responsabilidad Social Corporativa (RSC), Asuntos Públicos, Gobierno Corporativo."
+  ],
+  "valoresTITULO": [
+    "Ambición",
+    "Autonomía",
+    "Eficiencia",
+    "Excelencia",
+    "Orientación a resultados",
+    "Respeto"
+  ],
+  "valoresTEXTO": [
+    "Perseguirá el alcance de metas valiosas y relevantes. Estará motivada por el crecimiento personal y profesional, y buscará desafiarse y conseguir nuevos logros.",
+    "Expresará sus opiniones libremente, participará en decisiones y actuará según su criterio. Mostrará autonomía y confianza para contribuir con su perspectiva.",
+    "Buscará lograr las metas establecidas con el menor consumo de recursos posible. Será consciente de optimizar los recursos disponibles en la organización.",
+    "Cumplirá con los requisitos y especificaciones establecidas con un alto compromiso y esfuerzo, buscando alcanzar los más altos estándares de calidad.",
+    "Actuará con velocidad y enfoque para cumplir los objetivos establecidos, tomando las acciones correctivas precisas de la forma más rápida y eficiente.",
+    "Valorará y reconocerá a las personas y las cosas. Tratará a los demás con cortesía, consideración y respeto. Promoverá un entorno inclusivo y respetuoso."
+  ]
+}
+
+
 ];
 
 function ResultPage() {
-  const { culturalFitData, desiredCulturalFitData } = staticData;
-
-  const createChart = (containerId, data, chartType) => {
-    const ctx = document.getElementById(containerId).getContext("2d");
-    new Chart(ctx, {
-      type: chartType,
-      data: {
-        labels: data.labels,
-        datasets: [
-          {
-            label: chartType === "radar" ? "Ajuste Cultural" : "KPIS",
-            data: data.values,
-            backgroundColor: data.colors,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-      },
-    });
-  };
-
-  const calculatePercentage = (data) => {
-    const total = data.values.reduce((acc, value) => acc + value, 0);
-    return data.values.map((value) => ((value / total) * 100).toFixed(2));
-  };
-
   useEffect(() => {
-    createChart("culturalFitChart", culturalFitData, "radar");
-    createChart("desiredCulturalFitChart", desiredCulturalFitData, "radar");
-
-    const culturalFitPercentage = calculatePercentage(culturalFitData);
-    const desiredCulturalFitPercentage = calculatePercentage(
-      desiredCulturalFitData
-    );
-
-    createDonutChart(
-      "culturalFitDonutChart",
-      culturalFitPercentage,
-    );
-    createDonutChart(
-      "desiredCulturalFitDonutChart",
-      desiredCulturalFitPercentage,
-    );
-  }, [culturalFitData, desiredCulturalFitData]);
-
-  const createDonutChart = (containerId, data) => {
-    const average = data.reduce((sum, value) => sum + parseFloat(value), 0) / data.length;
-    const averagePercentage = (average / data.reduce((sum, value) => sum + parseFloat(value), 0)) * 100;
-
-    const ctx = document.getElementById(containerId).getContext("2d");
-    new Chart(ctx, {
-      type: "doughnut",
-      data: {
-        labels: ["Average"],
-        datasets: [
-          {
-            data: [averagePercentage.toFixed(2)],
-            backgroundColor: ["lightgreen"],
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          },
-          tooltip: {
-            callbacks: {
-              label: (context) => {
-                const value = context.parsed;
-                return `${value.toFixed(2)}%`;
-              },
-            },
-          },
-          datalabels: {
-            formatter: (value, context) => {
-              return `${value}%`;
-            },
-            color: "white",
-            anchor: "center",
-            align: "center",
-            font: {
-              size: 14,
-            },
-          },
+    
+    const radarData = {
+      labels: data[0].arqTITULO,
+      datasets: [
+        {
+          label: "ARQind",
+          data: data[0].ARQind,
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          borderColor: "rgba(75, 192, 192, 1)",
+          borderWidth: 1,
         },
-      },
-    });
-  };
+      ],
+    };
+
+    const radarConfig = {
+      type: "radar",
+      data: radarData,
+    };
+
+    
+    const radarCanvas = document.getElementById("radarChart");
+    new Chart(radarCanvas, radarConfig);
+  }, []);
 
   return (
     // <Style.MainContainer id="main-container">
@@ -174,6 +145,7 @@ function ResultPage() {
         height="40vh"
       >
         <Box
+        alignItems={"center"}
           borderRadius={"8px"}
           backgroundColor={"rgba(238, 238, 238, 0.5)"}
           // class="chart-container"
@@ -182,71 +154,61 @@ function ResultPage() {
           flex={1}
           marginLeft={{ sm: "10px", xs: "0px" }}
         >
-          <canvas id="culturalFitChart" width="200" height="100"></canvas>
+          <canvas id="radarChart" width="400" height="400"></canvas>
         </Box>
+        <Box border={"5px solid blue"} flex={1}></Box>
         <Box border={"5px solid blue"} flex={1}>
-          <canvas id="culturalFitDonutChart" width="200" height="100"></canvas>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+        
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data[0].arqTITULO.map((title, index) => (
+                <TableRow key={index}>
+                  <TableCell>{title}</TableCell>
+                  <TableCell>{data[0].arqTEXTO[index]}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
         </Box>
-        <Box border={"5px solid blue"} flex={1}>
-          <canvas
-            id="desiredCulturalFitDonutChart"
-            width="200"
-            height="100"
-          ></canvas>
+        {/* <Box border={"5px solid blue"} flex={1}>
+         
         </Box>
         <Box
           marginRight={{ sm: "10px", xs: "0px" }}
           border={"5px solid blue"}
           flex={1}
         >
-          <canvas
-            id="desiredCulturalFitChart"
-            width="200"
-            height="100"
-          ></canvas>
-        </Box>
+          
+        </Box> */}
       </Stack>
       <Stack
-        // border="5px solid red"
-        alignContent={"center"}
+        border="5px solid red"
+        alignContent={"flex start"}
         height="40%"
         flexDirection="column"
-        alignItems="center"
+        alignItems="flex-start"
       >
         <Box
           display={"flex"}
-          // border="5px solid black"
+          border="5px solid black"
           width="40%"
-          flexDirection={{xs:"row"}}
-          justifyContent={{sm:"center", xs:"end"}}
+          flexDirection={{ xs: "row" }}
+          justifyContent={{ sm: "center", xs: "end" }}
           alignItems={"center"}
           height={"40vh"}
         >
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Nombre</TableCell>
-                  <TableCell>Puntuación</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {data.map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell>{row.id}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.score}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+         tabla2
         </Box>
       </Stack>
       <Stack
         marginBottom={"2%"}
-        // border="5px solid blue"
+        border="5px solid blue"
         display="flex"
         height="5vh"
         alignItems="center"
