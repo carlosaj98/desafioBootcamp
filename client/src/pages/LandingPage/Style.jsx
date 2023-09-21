@@ -10,45 +10,56 @@ const MainContainer = styled("div")({
 
 
   "#content-container": {
-    display: "flex",
     height: "100%",
+    width: "100%",
+    display: "flex",
     flexDirection: "column",
-    flexWrap: "wrap",
     alignItems: "center",
     justifyContent:"space-between",
-    gap: "24px",
   },
 
-  main: {
-    padding: "64px",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
+
+
+  "#logo img":{
+    width: "100%",
+    height: "auto"
   },
 
   h1: {
-    marginTop: "100px",
     fontSize: "5rem",
     fontWeight: "bold",
     color: "var(--primary-color)",
     fontFamily:"var(--secondary-font)",
   },
 
-  "#title-description": {
-    fontFamily:"var(--primary-font)",
+  "h1 span":{
+    color: "var(--secondary-color)",
+  },
+
+  "#first-description": {
+    fontFamily:"var(--secondary-font)",
+    color:"var(--secondary-color)",
     textAlign: "left",
     fontSize: "1.5rem",
+    marginBottom: "24px",
+  },
+
+  "#second-description":{
+    fontFamily:"var(--primary-font)",
+    color:"var(--secondary-color)",
+    textAlign: "left",
+    fontSize: "1.2rem",
     maxWidth: "800px",
     marginBottom: "24px",
   },
 
   "#content-container button": {
     backgroundColor: "var(--primary-color)",
-    borderRadius: "25px",
+    borderRadius: "30px",
     padding: "18px 100px",
-    fontFamily:"var(--primary-font)",
+    fontFamily:"var(--secondary-font)",
     fontSize: "1.15rem",
+
   },
 
   footer: {
@@ -70,13 +81,7 @@ const MainContainer = styled("div")({
     fontFamily: "var(--primary-font)",
   },
 
-  "#logo":{
-    width: "400px",
-    height: "400px",
-    backgroundImage: "url(/logoCF.png)",
-    backgroundRepeat: "no-repeat",
-    backgroundSize:"cover",
-  }
+
 })
 
 export default { MainContainer }
