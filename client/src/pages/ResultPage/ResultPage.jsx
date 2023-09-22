@@ -1,11 +1,11 @@
 import {
-  Container,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Stack,
   Box,
   Button,
-  List,
   Typography,
-  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -14,6 +14,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import { Chart } from "chart.js/auto";
 import { useEffect } from "react";
@@ -59,7 +60,7 @@ function ResultPage() {
       labels: data[0].arqTITULO,
       datasets: [
         {
-          label: data[0].arqTEXTO,
+          label:"You",
           data: data[0].ARQind,
           backgroundColor: "rgba(75, 192, 192, 0.2)",
           borderColor: "rgba(75, 192, 192, 1)",
@@ -91,13 +92,24 @@ function ResultPage() {
       <Stack
         margin={"10px"}
         flexDirection={"row"}
-        justifyContent={"center"}
-        justifyItems={"space-between"}
+        justifyContent={"space-between"}
       >
         <Box>
-          <canvas id="radarChart" width="300" height="300"></canvas>
+          <canvas id="radarChart" width="400" height="400"></canvas>
         </Box>
 
+        <Box style={{ maxWidth: "500px", maxHeight: "400" }}>
+          {data[0].arqTITULO.map((title, index) => (
+            <Accordion key={index}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant="h6">{title}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>{data[0].arqTEXTO[index]}</Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
+        </Box>
         <TableContainer
           component={Paper}
           style={{ maxWidth: "300px", maxHeight: "300" }}
@@ -105,7 +117,7 @@ function ResultPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Valores Predominantes</TableCell>
+                <TableCell style={{}}>Valores Predominantes</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
