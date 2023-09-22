@@ -14,6 +14,7 @@ const router = createBrowserRouter([
         path: "/result",
         element: <ResultPage />,
     },
+   
 ])
 
 export default router
