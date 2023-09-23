@@ -19,23 +19,30 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import { Chart } from "chart.js/auto";
 import { useEffect } from "react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { createRoot } from "react-dom/client";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrophy, faPerson, faBolt, faMedal,faCalendarCheck,faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrophy,
+  faPerson,
+  faBolt,
+  faMedal,
+  faCalendarCheck,
+  faHandHoldingHeart,
+} from "@fortawesome/free-solid-svg-icons";
+import ModalComponent from "./ModalComponent";
+
 
 function ResultPage() {
-
-
-const listIcons=[
-  <FontAwesomeIcon icon={faTrophy} size="xs" />,
-  <FontAwesomeIcon icon={faPerson} size="xs" />,
-  <FontAwesomeIcon icon={faBolt} size="xs" />,
-  <FontAwesomeIcon icon={faMedal} size="xs" />,
-  <FontAwesomeIcon icon={faCalendarCheck} size="xs" />,
-  <FontAwesomeIcon icon={faHandHoldingHeart} size="xs" />
-]
+  const listIcons = [
+    <FontAwesomeIcon icon={faTrophy} size="xs" />,
+    <FontAwesomeIcon icon={faPerson} size="xs" />,
+    <FontAwesomeIcon icon={faBolt} size="xs" />,
+    <FontAwesomeIcon icon={faMedal} size="xs" />,
+    <FontAwesomeIcon icon={faCalendarCheck} size="xs" />,
+    <FontAwesomeIcon icon={faHandHoldingHeart} size="xs" />,
+  ];
 
   const data = [
     {
@@ -85,89 +92,117 @@ const listIcons=[
     const radarConfig = {
       type: "radar",
       data: radarData,
+      opciones: {
+        plugins: {
+          legend: {
+            labels: {
+              fontFamily: "--primary-font",
+            },
+          },
+        },
+        scales: {
+          r: {
+            pointLabels: {
+              fontFamily: "--primary-font",
+            },
+          },
+        },
+      },
     };
 
     const radarCanvas = document.getElementById("radarChart");
     new Chart(radarCanvas, radarConfig);
   }, []);
 
-    const ARQind = data[0].ARQind;
-    const arqTITULO = data[0].arqTITULO;
-    const arqTEXTO = data[0].arqTEXTO;
-    console.log(ARQind)
-    const SortedARQind = ARQind.slice().sort((a, b) => b - a);
-   console.log(SortedARQind)
-    const tableStyle = {
-      maxWidth: "100%",
-      fontFamily: "var(--primary-font)"
-    };
+  const ARQind = data[0].ARQind;
+  const arqTITULO = data[0].arqTITULO;
+  const arqTEXTO = data[0].arqTEXTO;
+  console.log(ARQind);
+  const SortedARQind = ARQind.slice().sort((a, b) => b - a);
+  console.log(SortedARQind);
+
+  const tableStyle = {
+    maxWidth: "70%",
+    fontFamily: "var(--primary-font)",
+  };
 
 
+  
   return (
-    <Stack border={"3px solid red"} height={"100vh"} width={"100vw"} padding={"20px"}>
+    <Stack
+      border={"3px solid red"}
+      height={"100%"}
+      width={"100%"}
+      padding={"20px"}
+    >
       <Box>Logo</Box>
       <Box
-        border={"3px solid"}
         display={"flex"}
+        border={"3px solid"}
         flexDirection={"row"}
         justifyContent={"center"}
+        marginBottom={"10px"}
       >
-        <Button variant="outlined ">Boton1</Button> <Button>Boton2</Button>
+        <Typography fontFamily={"var(--primary-font)"}>
+          {" "}
+          Tu perfil cultural
+        </Typography>
       </Box>
       <Stack
         margin={"10px"}
         flexDirection={"row"}
-        justifyContent={"space-between"}
+        justifyContent={"center"}
+        gap={"200px"}
       >
         <Box>
           <canvas id="radarChart" width="400" height="400"></canvas>
         </Box>
-
-        <Box style={{ maxWidth: "500px", maxHeight: "400" }}>
+        <Box>
+     
+      {/* <ul>
         {SortedARQind.map((valor, index) => (
-        <Accordion key={index}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>{arqTITULO[ARQind.indexOf(valor)]}</Typography> {/* Display the title based on the index of the sorted value */}
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>{arqTEXTO[ARQind.indexOf(valor)]}</Typography> {/* Display the corresponding description based on the index of the sorted value */}
-          </AccordionDetails>
-        </Accordion>
-      ))}
+          <li key={index}>
+            <ModalComponent
+              title={arqTITULO[ARQind.indexOf(valor)]}
+              content={arqTEXTO[ARQind.indexOf(valor)]}
+            />
+          </li>
+        ))}
+      </ul> */}
+      
+    </Box>
 
-        </Box>
-        {/* <TableContainer
-          component={Paper}
-          style={{ maxWidth: "300px", maxHeight: "300" }}
+        <Box
+          marginTop={"50px"}
+          style={{ maxWidth: "500px", maxHeight: "300px", overflow: "auto" }}
         >
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell style={{}}>Valores Predominantes</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data[0].valoresTITULO.map((title, index) => (
-                <TableRow key={index}>
-                  <TableCell>{title}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer> */}
+          {SortedARQind.map((valor, index) => (
+            <Accordion key={index}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography fontFamily={"--primary-font"}>
+                  {arqTITULO[ARQind.indexOf(valor)]}
+                </Typography>{" "}
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography fontFamily={"--primary-font"}>
+                  {arqTEXTO[ARQind.indexOf(valor)]}
+                </Typography>{" "}
+              </AccordionDetails>
+            </Accordion>
+          ))}
+        </Box> 
       </Stack>
-      <Box>
-        <Typography>Valores predominantes</Typography>
-        <TableContainer component={Paper}style={tableStyle}>
+      <Box display={"flex"} justifyContent={"center"}>
+        <TableContainer component={Paper} style={tableStyle}>
           <Table>
             <TableHead>
-              <TableRow></TableRow>
+              <TableRow> Valores predominantes</TableRow>
             </TableHead>
 
             <TableBody>
               {data[0].valoresTITULO.map((title, index) => (
                 <TableRow key={index}>
-                    <TableCell>{listIcons[index]}</TableCell>
+                  <TableCell>{listIcons[index]}</TableCell>
                   <TableCell>{title}</TableCell>
 
                   <TableCell>{data[0].valoresTEXTO[index]}</TableCell>
@@ -177,8 +212,16 @@ const listIcons=[
           </Table>
         </TableContainer>
       </Box>
-      <Box display={"flex"} justifyContent={"center"}>
-        <Button>Descargar</Button>
+      <Box display={"flex"} justifyContent={"center"} marginTop={"10px"}>
+        <Button
+          variant="contained"
+          style={{
+            backgroundColor: "var(--primary-color)",
+            fontFamily: "--secondary-font",
+          }}
+        >
+          Descargar
+        </Button>
       </Box>
     </Stack>
   );
