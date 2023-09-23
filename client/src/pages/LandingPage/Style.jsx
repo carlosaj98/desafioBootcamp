@@ -26,10 +26,10 @@ const MainContainer = styled("div")({
   },
 
   h1: {
-    fontSize: "5rem",
+
     fontWeight: "bold",
     color: "var(--primary-color)",
-    fontFamily:"var(--secondary-font)",
+    fontFamily:"var(--primary-font)",
   },
 
   "h1 span":{
@@ -39,16 +39,12 @@ const MainContainer = styled("div")({
   "#first-description": {
     fontFamily:"var(--secondary-font)",
     color:"var(--secondary-color)",
-    textAlign: "left",
-    fontSize: "1.5rem",
     marginBottom: "24px",
   },
 
   "#second-description":{
     fontFamily:"var(--primary-font)",
     color:"var(--secondary-color)",
-    textAlign: "left",
-    fontSize: "1.2rem",
     maxWidth: "800px",
     marginBottom: "24px",
   },
@@ -56,9 +52,7 @@ const MainContainer = styled("div")({
   "#content-container button": {
     backgroundColor: "var(--primary-color)",
     borderRadius: "30px",
-    padding: "18px 100px",
     fontFamily:"var(--secondary-font)",
-    fontSize: "1.15rem",
 
   },
 
