@@ -1,7 +1,30 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import React from "react"
+import ReactDOM from "react-dom/client"
+import router from "./router"
+import { RouterProvider } from "react-router-dom"
+import { GlobalStyles } from "@mui/material"
+import "@fontsource/rubik/700.css"
+import "@fontsource/montserrat/400.css"
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-    <App />
+const cssNormalize = {
+  ":root": {
+    "--bg-color": "white",
+    "--primary-color": "#00C3C0",
+    "--secondary-color": "#34495E",
+    "--primary-font": "Montserrat",
+    "--secondary-font": "Rubik",
+  },
+  
+  "*": {
+    margin: "0",
+    padding: "0",
+    boxSizing: "border-box",
+  },
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <>
+    <GlobalStyles styles={cssNormalize} />
+    <RouterProvider router={router} />
+  </>
 )
