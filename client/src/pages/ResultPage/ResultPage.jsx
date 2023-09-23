@@ -15,15 +15,28 @@ import {
   Paper,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import { Chart } from "chart.js/auto";
 import { useEffect } from "react";
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { AgGridReact } from "ag-grid-react";
-// import Style from "./Style";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrophy, faPerson, faBolt, faMedal,faCalendarCheck,faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons';
 
 function ResultPage() {
+
+
+const listIcons=[
+  <FontAwesomeIcon icon={faTrophy} size="xs" />,
+  <FontAwesomeIcon icon={faPerson} size="xs" />,
+  <FontAwesomeIcon icon={faBolt} size="xs" />,
+  <FontAwesomeIcon icon={faMedal} size="xs" />,
+  <FontAwesomeIcon icon={faCalendarCheck} size="xs" />,
+  <FontAwesomeIcon icon={faHandHoldingHeart} size="xs" />
+]
+
   const data = [
     {
       ARQind: [17.46, 14.29, 22.22, 18.25, 12.7, 15.08],
@@ -60,7 +73,7 @@ function ResultPage() {
       labels: data[0].arqTITULO,
       datasets: [
         {
-          label:"You",
+          label: "You",
           data: data[0].ARQind,
           backgroundColor: "rgba(75, 192, 192, 0.2)",
           borderColor: "rgba(75, 192, 192, 1)",
@@ -78,8 +91,20 @@ function ResultPage() {
     new Chart(radarCanvas, radarConfig);
   }, []);
 
+    const ARQind = data[0].ARQind;
+    const arqTITULO = data[0].arqTITULO;
+    const arqTEXTO = data[0].arqTEXTO;
+    console.log(ARQind)
+    const SortedARQind = ARQind.slice().sort((a, b) => b - a);
+   console.log(SortedARQind)
+    const tableStyle = {
+      maxWidth: "100%",
+      fontFamily: "var(--primary-font)"
+    };
+
+
   return (
-    <Stack border={"3px solid red"} height={"100vh"} width={"100vw"}>
+    <Stack border={"3px solid red"} height={"100vh"} width={"100vw"} padding={"20px"}>
       <Box>Logo</Box>
       <Box
         border={"3px solid"}
@@ -87,7 +112,7 @@ function ResultPage() {
         flexDirection={"row"}
         justifyContent={"center"}
       >
-        <Button>Boton1</Button> <Button>Boton2</Button>
+        <Button variant="outlined ">Boton1</Button> <Button>Boton2</Button>
       </Box>
       <Stack
         margin={"10px"}
@@ -99,18 +124,19 @@ function ResultPage() {
         </Box>
 
         <Box style={{ maxWidth: "500px", maxHeight: "400" }}>
-          {data[0].arqTITULO.map((title, index) => (
-            <Accordion key={index}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="h6">{title}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{data[0].arqTEXTO[index]}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
+        {SortedARQind.map((valor, index) => (
+        <Accordion key={index}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>{arqTITULO[ARQind.indexOf(valor)]}</Typography> {/* Display the title based on the index of the sorted value */}
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>{arqTEXTO[ARQind.indexOf(valor)]}</Typography> {/* Display the corresponding description based on the index of the sorted value */}
+          </AccordionDetails>
+        </Accordion>
+      ))}
+
         </Box>
-        <TableContainer
+        {/* <TableContainer
           component={Paper}
           style={{ maxWidth: "300px", maxHeight: "300" }}
         >
@@ -128,10 +154,11 @@ function ResultPage() {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer> */}
       </Stack>
       <Box>
-        <TableContainer component={Paper} style={{ maxWidth: "100%" }}>
+        <Typography>Valores predominantes</Typography>
+        <TableContainer component={Paper}style={tableStyle}>
           <Table>
             <TableHead>
               <TableRow></TableRow>
@@ -140,6 +167,7 @@ function ResultPage() {
             <TableBody>
               {data[0].valoresTITULO.map((title, index) => (
                 <TableRow key={index}>
+                    <TableCell>{listIcons[index]}</TableCell>
                   <TableCell>{title}</TableCell>
 
                   <TableCell>{data[0].valoresTEXTO[index]}</TableCell>
