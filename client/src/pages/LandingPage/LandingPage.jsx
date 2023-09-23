@@ -60,9 +60,9 @@ function LandingPage() {
             }}
           >
             {!isMobileScreen ? (
-              <img src="../../../assets/logoCF.png" alt="" />
+              <img src="/logoCF.png" alt="" />
             ) : (
-              <img src="../../../assets/logoCF_text.png" alt="" />
+              <img src="/logoCF_text.png" alt="" />
             )}
           </Box>
         </Stack>
