@@ -33,7 +33,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ModalComponent from "./ModalComponent";
 
-
 function ResultPage() {
   const listIcons = [
     <FontAwesomeIcon icon={faTrophy} size="xs" />,
@@ -121,13 +120,28 @@ function ResultPage() {
   const SortedARQind = ARQind.slice().sort((a, b) => b - a);
   console.log(SortedARQind);
 
-  const tableStyle = {
-    maxWidth: "70%",
-    fontFamily: "var(--primary-font)",
+  const accordionStyle = {
+    boxShadow: "none",
+    border: "1px  grey",
+ 
   };
 
+  const tableStyle = {
+    maxWidth: "70%",
+    border: "1px black",
+    boxShadow: "none",
+  };
 
-  
+  const tableCellStyle = {
+    fontFamily: "--primary-font",
+    fontSize: "16px",
+  };
+
+  const typographyStyle = {
+    fontFamily: "--primary-font",
+    color: "--secondary-color",
+    fontWeight: "bold",
+  };
   return (
     <Stack
       border={"3px solid red"}
@@ -152,14 +166,13 @@ function ResultPage() {
         margin={"10px"}
         flexDirection={"row"}
         justifyContent={"center"}
-        gap={"200px"}
+        gap={"150px"}
       >
         <Box>
           <canvas id="radarChart" width="400" height="400"></canvas>
         </Box>
         <Box>
-     
-      {/* <ul>
+          {/* <ul>
         {SortedARQind.map((valor, index) => (
           <li key={index}>
             <ModalComponent
@@ -169,19 +182,18 @@ function ResultPage() {
           </li>
         ))}
       </ul> */}
-      
-    </Box>
+        </Box>
 
         <Box
           marginTop={"50px"}
-          style={{ maxWidth: "500px", maxHeight: "300px", overflow: "auto" }}
+          style={{ maxWidth: "500px", maxHeight: "350px", overflow: "auto" }}
         >
           {SortedARQind.map((valor, index) => (
-            <Accordion key={index}>
+            <Accordion key={index} style={accordionStyle}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography fontFamily={"--primary-font"}>
+                <Typography style={typographyStyle}>
                   {arqTITULO[ARQind.indexOf(valor)]}
-                </Typography>{" "}
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography fontFamily={"--primary-font"}>
@@ -190,22 +202,39 @@ function ResultPage() {
               </AccordionDetails>
             </Accordion>
           ))}
-        </Box> 
+        </Box>
       </Stack>
       <Box display={"flex"} justifyContent={"center"}>
         <TableContainer component={Paper} style={tableStyle}>
           <Table>
             <TableHead>
-              <TableRow> Valores predominantes</TableRow>
+              <TableRow>
+                {" "}
+                <Typography style={typographyStyle}>
+                  Valores predominantes
+                </Typography>{" "}
+              </TableRow>
             </TableHead>
 
             <TableBody>
               {data[0].valoresTITULO.map((title, index) => (
                 <TableRow key={index}>
-                  <TableCell>{listIcons[index]}</TableCell>
-                  <TableCell>{title}</TableCell>
+                  <TableCell style={tableCellStyle}>
+                    {listIcons[index]}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      fontFamily: "var(--primary-font)",
+                      color: "Black",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {title}
+                  </TableCell>
 
-                  <TableCell>{data[0].valoresTEXTO[index]}</TableCell>
+                  <TableCell style={tableCellStyle}>
+                    {data[0].valoresTEXTO[index]}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -216,8 +245,10 @@ function ResultPage() {
         <Button
           variant="contained"
           style={{
+            borderRadius: "8px",
+            boxShadow: "none",
             backgroundColor: "var(--primary-color)",
-            fontFamily: "--secondary-font",
+            fontFamily: "--primary-font",
           }}
         >
           Descargar
