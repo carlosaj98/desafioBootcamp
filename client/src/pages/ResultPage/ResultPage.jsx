@@ -21,7 +21,7 @@ import { Chart } from "chart.js/auto";
 import { useEffect } from "react";
 import { useState } from "react";
 import { createRoot } from "react-dom/client";
-
+import { styled } from "@mui/material/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrophy,
@@ -31,7 +31,6 @@ import {
   faCalendarCheck,
   faHandHoldingHeart,
 } from "@fortawesome/free-solid-svg-icons";
-import ModalComponent from "./ModalComponent";
 
 function ResultPage() {
   const listIcons = [
@@ -123,7 +122,6 @@ function ResultPage() {
   const accordionStyle = {
     boxShadow: "none",
     border: "1px  grey",
- 
   };
 
   const tableStyle = {
@@ -142,6 +140,25 @@ function ResultPage() {
     color: "--secondary-color",
     fontWeight: "bold",
   };
+
+  const CustomAccordionDetails = styled(AccordionDetails)`
+ 
+  maxHeight: 350px;
+  overflow: auto;
+
+ 
+  "&::-webkit-scrollbar": {
+    width: "6px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "lightgray",
+    borderRadius: "4px",
+  },
+  "&::-webkit-scrollbar-track": {
+    backgroundColor: "transparent",
+  },
+`;
+
   return (
     <Stack
       border={"3px solid red"}
@@ -171,18 +188,6 @@ function ResultPage() {
         <Box>
           <canvas id="radarChart" width="400" height="400"></canvas>
         </Box>
-        <Box>
-          {/* <ul>
-        {SortedARQind.map((valor, index) => (
-          <li key={index}>
-            <ModalComponent
-              title={arqTITULO[ARQind.indexOf(valor)]}
-              content={arqTEXTO[ARQind.indexOf(valor)]}
-            />
-          </li>
-        ))}
-      </ul> */}
-        </Box>
 
         <Box
           marginTop={"50px"}
@@ -195,11 +200,11 @@ function ResultPage() {
                   {arqTITULO[ARQind.indexOf(valor)]}
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails>
+              <CustomAccordionDetails>
                 <Typography fontFamily={"--primary-font"}>
                   {arqTEXTO[ARQind.indexOf(valor)]}
                 </Typography>{" "}
-              </AccordionDetails>
+              </CustomAccordionDetails>
             </Accordion>
           ))}
         </Box>
@@ -209,10 +214,7 @@ function ResultPage() {
           <Table>
             <TableHead>
               <TableRow>
-                {" "}
-                <Typography style={typographyStyle}>
-                  Valores predominantes
-                </Typography>{" "}
+                <TableCell>Valores predominantes</TableCell>
               </TableRow>
             </TableHead>
 
