@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom"
-import { LandingPage, FormPage, ResultPage } from "./pages"
+import { LandingPage, ResultPage, QuizPage, RegisterPage } from "./pages"
 
 const router = createBrowserRouter([
     {
@@ -8,11 +8,15 @@ const router = createBrowserRouter([
     },
     {
         path: "/form",
-        element: <FormPage />,
+        element: <QuizPage />,
     },
     {
         path: "/result",
         element: <ResultPage />,
+    },
+    {
+        path: "/register",
+        element: <RegisterPage />,
     },
    
 ])
