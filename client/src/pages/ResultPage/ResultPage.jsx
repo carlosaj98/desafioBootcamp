@@ -15,15 +15,34 @@ import {
   Paper,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import { Chart } from "chart.js/auto";
 import { useEffect } from "react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { AgGridReact } from "ag-grid-react";
-// import Style from "./Style";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrophy,
+  faPerson,
+  faBolt,
+  faMedal,
+  faCalendarCheck,
+  faHandHoldingHeart,
+} from "@fortawesome/free-solid-svg-icons";
+import ModalComponent from "./ModalComponent";
 
 function ResultPage() {
+  const listIcons = [
+    <FontAwesomeIcon icon={faTrophy} size="xs" />,
+    <FontAwesomeIcon icon={faPerson} size="xs" />,
+    <FontAwesomeIcon icon={faBolt} size="xs" />,
+    <FontAwesomeIcon icon={faMedal} size="xs" />,
+    <FontAwesomeIcon icon={faCalendarCheck} size="xs" />,
+    <FontAwesomeIcon icon={faHandHoldingHeart} size="xs" />,
+  ];
+
   const data = [
     {
       ARQind: [17.46, 14.29, 22.22, 18.25, 12.7, 15.08],
@@ -60,7 +79,7 @@ function ResultPage() {
       labels: data[0].arqTITULO,
       datasets: [
         {
-          label:"You",
+          label: "You",
           data: data[0].ARQind,
           backgroundColor: "rgba(75, 192, 192, 0.2)",
           borderColor: "rgba(75, 192, 192, 1)",
@@ -72,85 +91,168 @@ function ResultPage() {
     const radarConfig = {
       type: "radar",
       data: radarData,
+      opciones: {
+        plugins: {
+          legend: {
+            labels: {
+              fontFamily: "--primary-font",
+            },
+          },
+        },
+        scales: {
+          r: {
+            pointLabels: {
+              fontFamily: "--primary-font",
+            },
+          },
+        },
+      },
     };
 
     const radarCanvas = document.getElementById("radarChart");
     new Chart(radarCanvas, radarConfig);
   }, []);
 
+  const ARQind = data[0].ARQind;
+  const arqTITULO = data[0].arqTITULO;
+  const arqTEXTO = data[0].arqTEXTO;
+  console.log(ARQind);
+  const SortedARQind = ARQind.slice().sort((a, b) => b - a);
+  console.log(SortedARQind);
+
+  const accordionStyle = {
+    boxShadow: "none",
+    border: "1px  grey",
+ 
+  };
+
+  const tableStyle = {
+    maxWidth: "70%",
+    border: "1px black",
+    boxShadow: "none",
+  };
+
+  const tableCellStyle = {
+    fontFamily: "--primary-font",
+    fontSize: "16px",
+  };
+
+  const typographyStyle = {
+    fontFamily: "--primary-font",
+    color: "--secondary-color",
+    fontWeight: "bold",
+  };
   return (
-    <Stack border={"3px solid red"} height={"100vh"} width={"100vw"}>
+    <Stack
+      border={"3px solid red"}
+      height={"100%"}
+      width={"100%"}
+      padding={"20px"}
+    >
       <Box>Logo</Box>
       <Box
-        border={"3px solid"}
         display={"flex"}
+        border={"3px solid"}
         flexDirection={"row"}
         justifyContent={"center"}
+        marginBottom={"10px"}
       >
-        <Button>Boton1</Button> <Button>Boton2</Button>
+        <Typography fontFamily={"var(--primary-font)"}>
+          {" "}
+          Tu perfil cultural
+        </Typography>
       </Box>
       <Stack
         margin={"10px"}
         flexDirection={"row"}
-        justifyContent={"space-between"}
+        justifyContent={"center"}
+        gap={"150px"}
       >
         <Box>
           <canvas id="radarChart" width="400" height="400"></canvas>
         </Box>
+        <Box>
+          {/* <ul>
+        {SortedARQind.map((valor, index) => (
+          <li key={index}>
+            <ModalComponent
+              title={arqTITULO[ARQind.indexOf(valor)]}
+              content={arqTEXTO[ARQind.indexOf(valor)]}
+            />
+          </li>
+        ))}
+      </ul> */}
+        </Box>
 
-        <Box style={{ maxWidth: "500px", maxHeight: "400" }}>
-          {data[0].arqTITULO.map((title, index) => (
-            <Accordion key={index}>
+        <Box
+          marginTop={"50px"}
+          style={{ maxWidth: "500px", maxHeight: "350px", overflow: "auto" }}
+        >
+          {SortedARQind.map((valor, index) => (
+            <Accordion key={index} style={accordionStyle}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="h6">{title}</Typography>
+                <Typography style={typographyStyle}>
+                  {arqTITULO[ARQind.indexOf(valor)]}
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>{data[0].arqTEXTO[index]}</Typography>
+                <Typography fontFamily={"--primary-font"}>
+                  {arqTEXTO[ARQind.indexOf(valor)]}
+                </Typography>{" "}
               </AccordionDetails>
             </Accordion>
           ))}
         </Box>
-        <TableContainer
-          component={Paper}
-          style={{ maxWidth: "300px", maxHeight: "300" }}
-        >
+      </Stack>
+      <Box display={"flex"} justifyContent={"center"}>
+        <TableContainer component={Paper} style={tableStyle}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell style={{}}>Valores Predominantes</TableCell>
+                {" "}
+                <Typography style={typographyStyle}>
+                  Valores predominantes
+                </Typography>{" "}
               </TableRow>
             </TableHead>
-            <TableBody>
-              {data[0].valoresTITULO.map((title, index) => (
-                <TableRow key={index}>
-                  <TableCell>{title}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Stack>
-      <Box>
-        <TableContainer component={Paper} style={{ maxWidth: "100%" }}>
-          <Table>
-            <TableHead>
-              <TableRow></TableRow>
-            </TableHead>
 
             <TableBody>
               {data[0].valoresTITULO.map((title, index) => (
                 <TableRow key={index}>
-                  <TableCell>{title}</TableCell>
+                  <TableCell style={tableCellStyle}>
+                    {listIcons[index]}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      fontFamily: "var(--primary-font)",
+                      color: "Black",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {title}
+                  </TableCell>
 
-                  <TableCell>{data[0].valoresTEXTO[index]}</TableCell>
+                  <TableCell style={tableCellStyle}>
+                    {data[0].valoresTEXTO[index]}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Box>
-      <Box display={"flex"} justifyContent={"center"}>
-        <Button>Descargar</Button>
+      <Box display={"flex"} justifyContent={"center"} marginTop={"10px"}>
+        <Button
+          variant="contained"
+          style={{
+            borderRadius: "8px",
+            boxShadow: "none",
+            backgroundColor: "var(--primary-color)",
+            fontFamily: "--primary-font",
+          }}
+        >
+          Descargar
+        </Button>
       </Box>
     </Stack>
   );
