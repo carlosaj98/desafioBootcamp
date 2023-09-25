@@ -11,6 +11,7 @@ import { themeJson } from "../theme";
 import Link from "@mui/material/Link";
 import { useNavigate } from "react-router-dom";
 
+
 function SurveyComponent({
   data,
   maxSteps,
@@ -30,7 +31,6 @@ function SurveyComponent({
   survey.onComplete.add((sender, options) => {
     const result = sender.data["Me considero una persona…"].join("");
     onNext(result);
-    console.log(result);
   });
 
   const dataHardcode = {
@@ -67,7 +67,7 @@ function SurveyComponent({
                 dataHardcode.data_all =
                   allResults +
                   "999999999999999999999999999999999999999999999999999999999999999999999999";
-                console.log(dataHardcode);
+                
 
                 // const apiUrl = `https://loving-germain.82-223-101-75.plesk.page/api/store-result?client_id=533&survey_id=2114&data_all=${encodeURIComponent(
                 //   dataHardcode.data_all
