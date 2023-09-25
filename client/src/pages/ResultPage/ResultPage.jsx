@@ -14,34 +14,24 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
+
 import { Chart } from "chart.js/auto";
 import { useEffect } from "react";
-import { useState } from "react";
-import { createRoot } from "react-dom/client";
+
 import { styled } from "@mui/material/styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrophy,
-  faPerson,
-  faBolt,
-  faMedal,
-  faCalendarCheck,
-  faHandHoldingHeart,
-} from "@fortawesome/free-solid-svg-icons";
+import logoIcon from "../../../assets/logoCF_text.png";
+import goalIcon from "../../../assets/goalssvg.png";
+import innoIcon from "../../../assets/inno.png";
+import peopleIcon from "../../../assets/people.png";
+import sostIcon from "../../../assets/sost.png";
+import digitalIcon from "../../../assets/digital.png";
+import normsIcon from "../../../assets/norms.png";
+
 
 function ResultPage() {
-  const listIcons = [
-    <FontAwesomeIcon icon={faTrophy} size="xs" />,
-    <FontAwesomeIcon icon={faPerson} size="xs" />,
-    <FontAwesomeIcon icon={faBolt} size="xs" />,
-    <FontAwesomeIcon icon={faMedal} size="xs" />,
-    <FontAwesomeIcon icon={faCalendarCheck} size="xs" />,
-    <FontAwesomeIcon icon={faHandHoldingHeart} size="xs" />,
-  ];
-
   const data = [
     {
       ARQind: [17.46, 14.29, 22.22, 18.25, 12.7, 15.08],
@@ -70,9 +60,22 @@ function ResultPage() {
         "Actuará con velocidad y enfoque para cumplir los objetivos establecidos, tomando las acciones correctivas precisas de la forma más rápida y eficiente.",
         "Valorará y reconocerá a las personas y las cosas. Tratará a los demás con cortesía, consideración y respeto. Promoverá un entorno inclusivo y respetuoso.",
       ],
+      match1_name: "ENAGAS",
+      match1_kpi: "85%",
+      match2_name: "FERROVIAL",
+      match2_kpi: "68%",
     },
   ];
-
+  const matchData = [
+    {
+      name: data[0].match1_name,
+      kpi: data[0].match1_kpi,
+    },
+    {
+      name: data[0].match2_name,
+      kpi: data[0].match2_kpi,
+    },
+  ];
   useEffect(() => {
     const radarData = {
       labels: data[0].arqTITULO,
@@ -90,18 +93,18 @@ function ResultPage() {
     const radarConfig = {
       type: "radar",
       data: radarData,
-      opciones: {
+      options: {
         plugins: {
           legend: {
             labels: {
-              fontFamily: "--primary-font",
+              fontFamily: "var(--primary-font)",
             },
           },
         },
         scales: {
           r: {
             pointLabels: {
-              fontFamily: "--primary-font",
+              fontFamily: "var(--primary-font)",
             },
           },
         },
@@ -136,7 +139,7 @@ function ResultPage() {
   };
 
   const typographyStyle = {
-    fontFamily: "--primary-font",
+    fontFamily: "--secondary-font",
     color: "--secondary-color",
     fontWeight: "bold",
   };
@@ -158,29 +161,54 @@ function ResultPage() {
     backgroundColor: "transparent",
   },
 `;
-
+  const iconStyles = {
+    width: "40px",
+    height: "40px",
+  };
+  const iconsByTitle = {
+    People: <img src={peopleIcon} alt="People" style={iconStyles} />,
+    Innovation: <img src={innoIcon} alt="Innovation" style={iconStyles} />,
+    Goals: <img src={goalIcon} alt="Goals" style={iconStyles} />,
+    Norms: <img src={normsIcon} alt="ESG" style={iconStyles} />,
+    Digital: <img src={digitalIcon} alt="Digital" style={iconStyles} />,
+    ESG: <img src={sostIcon} alt="Norms" style={iconStyles} />,
+  };
+  const logoStyle = {
+    height: "auto",
+    maxWidth: "100%",
+  };
   return (
-    <Stack
-      border={"3px solid red"}
-      height={"100%"}
-      width={"100%"}
-      padding={"20px"}
-    >
-      <Box>Logo</Box>
+    <Stack height={"100%"} width={"100%"} padding={"20px"}>
       <Box
         display={"flex"}
-        border={"3px solid"}
+        border={"3px #34495e solid"}
         flexDirection={"row"}
         justifyContent={"center"}
         marginBottom={"10px"}
+        backgroundColor={"#34495e"}
+      ></Box>
+      <Box>
+        <img src={logoIcon} alt="culturalFit" style={logoStyle} />
+      </Box>
+      <Box
+        display={"flex"}
+        border={"3px #34495e solid"}
+        flexDirection={"row"}
+        justifyContent={"center"}
+        marginBottom={"10px"}
+        backgroundColor={"#34495e"}
       >
-        <Typography fontFamily={"var(--primary-font)"}>
-          {" "}
+        <Typography
+          variant="h2"
+          fontFamily={"var(--primary-font)"}
+          fontSize={"30px"}
+          color={"var(--primary-color)"}
+        >
           Tu perfil cultural
         </Typography>
       </Box>
       <Stack
-        margin={"10px"}
+        margin={"70px"}
         flexDirection={"row"}
         justifyContent={"center"}
         gap={"150px"}
@@ -188,22 +216,54 @@ function ResultPage() {
         <Box>
           <canvas id="radarChart" width="400" height="400"></canvas>
         </Box>
-
+        <div style={{ marginBottom: "20px", textAlign: "center" }}>
+          <Typography style={typographyStyle}>Match con empresas</Typography>
+          <TableContainer component={Paper} style={tableStyle}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Nombre</TableCell>
+                  <TableCell>KPI</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {matchData.map((match, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{match.name}</TableCell>
+                    <TableCell>{match.kpi}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+       
         <Box
           marginTop={"50px"}
-          style={{ maxWidth: "500px", maxHeight: "350px", overflow: "auto" }}
+          style={{
+            maxWidth: "500px",
+            height: "400px",
+            overflow: "auto",
+
+            borderRadius: "8px",
+          }}
         >
           {SortedARQind.map((valor, index) => (
             <Accordion key={index} style={accordionStyle}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography style={typographyStyle}>
-                  {arqTITULO[ARQind.indexOf(valor)]}
-                </Typography>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  {iconsByTitle[arqTITULO[ARQind.indexOf(valor)]]}
+                  <Typography
+                    style={{ marginLeft: "10px", ...typographyStyle }}
+                  >
+                    {arqTITULO[ARQind.indexOf(valor)]}
+                  </Typography>
+                </div>
               </AccordionSummary>
               <CustomAccordionDetails>
                 <Typography fontFamily={"--primary-font"}>
                   {arqTEXTO[ARQind.indexOf(valor)]}
-                </Typography>{" "}
+                </Typography>
               </CustomAccordionDetails>
             </Accordion>
           ))}
@@ -221,9 +281,7 @@ function ResultPage() {
             <TableBody>
               {data[0].valoresTITULO.map((title, index) => (
                 <TableRow key={index}>
-                  <TableCell style={tableCellStyle}>
-                    {listIcons[index]}
-                  </TableCell>
+                  <TableCell style={tableCellStyle}></TableCell>
                   <TableCell
                     style={{
                       fontFamily: "var(--primary-font)",
@@ -253,7 +311,7 @@ function ResultPage() {
             fontFamily: "--primary-font",
           }}
         >
-          Descargar
+          Enviar por email
         </Button>
       </Box>
     </Stack>
