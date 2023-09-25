@@ -48,6 +48,7 @@ function SurveyComponent({
         showNavigationButtons="none"
         choicesOrder="one"
         allResults
+        
       />
 
       <MobileStepper
@@ -55,6 +56,7 @@ function SurveyComponent({
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
+        
         nextButton={
           <Button
             size="large"
@@ -67,23 +69,6 @@ function SurveyComponent({
                 dataHardcode.data_all =
                   allResults +
                   "999999999999999999999999999999999999999999999999999999999999999999999999";
-                
-
-                // const apiUrl = `https://loving-germain.82-223-101-75.plesk.page/api/store-result?client_id=533&survey_id=2114&data_all=${encodeURIComponent(
-                //   dataHardcode.data_all
-                // )}`;
-                // console.log(apiUrl);
-                // // Realiza la solicitud GET a la API
-                // fetch(apiUrl)
-                //   .then((response) => response.json())
-                //   .then((responseData) => {
-                //     // Manejar la respuesta de la API aquí
-                //     console.log("Respuesta de la API:", responseData);
-                //   })
-                //   .catch((error) => {
-                //     // Manejar errores de la solicitud aquí
-                //     console.error("Error al enviar datos:", error);
-                //   });
               } else {
                 survey.completeLastPage();
               }
