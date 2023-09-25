@@ -9,6 +9,8 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { useTheme } from "@mui/material/styles";
 import { themeJson } from "../theme";
 
+import axios from "axios"
+
 function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
   const [allResults, setAllResults] = React.useState("");
 
@@ -26,7 +28,7 @@ function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
     console.log(allResults, "SurveyComponet2");
   }, [allResults]);
 
-  // console.log(allResults);
+
   const survey = new Model(data);
   const theme = useTheme();
 
@@ -34,7 +36,26 @@ function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
 
   survey.applyTheme(themeJson);
   survey.onComplete.add((sender, options) => {
-    console.log(JSON.stringify(sender.data, null, 3));
+    const data_user = JSON.stringify(sender.data, null, 3)
+    //Hacer el post para el registro y obtener el id(survey_id)
+    const data_user_obj = JSON.parse(data_user);
+    const email = data_user_obj.email;
+
+    const data_user_post = {
+      client_id: "533",
+      email: email
+    }
+    console.log(data_user_post)
+
+    // const apiUrl = `https://loving-germain.82-223-101-75.plesk.page/api/store-client?client_id=533&email=${encodeURIComponent(email)}`;
+    // console.log(apiUrl);
+
+    // try {
+    //   const response = axios.post(apiUrl);
+    //   console.log("Respuesta de la API:", response.data);
+    // } catch (error) {
+    //   console.error("Error al enviar datos:", error);
+    // }
   });
 
   const dataHardcode = {
@@ -59,18 +80,20 @@ function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
+        data_user
         nextButton={
           <Button
             size="large"
             onClick={() => {
               if (isLastStep) {
                 survey.completeLastPage();
-                //Ir a pagina de registro
-                // fetch();
+
+
                 dataHardcode.data_all =
                   allResults +
                   "999999999999999999999999999999999999999999999999999999999999999999999999";
                 console.log(dataHardcode);
+                // Primer post para conseguir el id
 
                 // const apiUrl = `https://loving-germain.82-223-101-75.plesk.page/api/store-result?client_id=533&survey_id=2114&data_all=${encodeURIComponent(
                 //   dataHardcode.data_all
@@ -99,16 +122,6 @@ function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
             ) : (
               <KeyboardArrowRight />
             )}
-          </Button>
-        }
-        backButton={
-          <Button size="large" onClick={onBack} disabled={activeStep === 0}>
-            {theme.direction === "rtl" ? (
-              <KeyboardArrowRight />
-            ) : (
-              <KeyboardArrowLeft />
-            )}
-            Back
           </Button>
         }
       />

@@ -38,7 +38,7 @@ export default function TextMobileStepper() {
     <Box sx={{ maxWidth: 800, flexGrow: 1, margin: "auto" }}>
       <Paper elevation={3} sx={{ padding: "20px", borderRadius: "10px" }}>
         <Typography variant="h6" gutterBottom>
-          Test Cultural
+          Rellena los datos y obten tus resultados.
         </Typography>
         <SurveyComponent2
           data={question2[activeStep]}

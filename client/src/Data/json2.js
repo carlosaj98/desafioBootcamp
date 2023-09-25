@@ -10,7 +10,7 @@ export const question2 = [
       {
         name: "email",
         type: "text",
-        title: "E-mail address",
+        title: "E-mail",
         inputType: "email",
         placeholder: "foobar@example.com",
         isRequired: true,

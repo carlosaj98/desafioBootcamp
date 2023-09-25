@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import { useEffect } from "react";
 
 import SurveyComponent from "../../Components/SurveyComponent";
-import { questions } from "../../Data/json";
+import { questions, questionsWideScreen, questionsNarrowScreen, isScreenWideEnough } from "../../Data/json";
 
 export default function TextMobileStepper() {
   const theme = useTheme();
@@ -17,8 +17,9 @@ export default function TextMobileStepper() {
   useEffect(() => {
     setAllResults((prevResults) => prevResults + newResult);
   }, [newResult]);
-
-  const maxSteps = questions.length;
+  console.log(isScreenWideEnough())
+  const currentQuestions = isScreenWideEnough() ? questionsWideScreen : questionsNarrowScreen;
+  const maxSteps = isScreenWideEnough() ? questionsWideScreen.length : questionsNarrowScreen.length;
 
   const handleNext = async (newResult) => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -53,13 +54,13 @@ export default function TextMobileStepper() {
   }, [allResults]);
 
   return (
-    <Box sx={{ maxWidth: 800, flexGrow: 1, margin: "auto" }}>
-      <Paper elevation={3} sx={{ padding: "20px", borderRadius: "10px" }}>
+    <Box sx={{ maxWidth: 800, flexGrow: 1, margin: "auto", marginTop:"100px"}}>
+      <Paper elevation={3} sx={{ padding: "20px", borderRadius: "10px", background:"red"}}>
         <Typography variant="h6" gutterBottom>
           Test Cultural
         </Typography>
         <SurveyComponent
-          data={questions[activeStep]}
+          data={currentQuestions[activeStep]}
           activeStep={activeStep}
           maxSteps={maxSteps}
           onNext={handleNext}
