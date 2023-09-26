@@ -8,7 +8,6 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { useTheme } from "@mui/material/styles";
 import { themeJson } from "../theme";
-import Link from "@mui/material/Link";
 import { useNavigate } from "react-router-dom";
 
 

@@ -35,7 +35,7 @@ function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
   // You can delete the line below if you do not use a customized theme
 
   survey.applyTheme(themeJson);
-  survey.onComplete.add((sender, options) => {
+  survey.onComplete.add(async(sender, options) => {
     const data_user = JSON.stringify(sender.data, null, 3)
     //Hacer el post para el registro y obtener el id(survey_id)
     const data_user_obj = JSON.parse(data_user);
@@ -47,22 +47,35 @@ function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
     }
     console.log(data_user_post)
 
-    // const apiUrl = `https://loving-germain.82-223-101-75.plesk.page/api/store-client?client_id=533&email=${encodeURIComponent(email)}`;
-    // console.log(apiUrl);
+    const apiUrl = `https://proxy-server-cf.onrender.com/proxy/store-client?client_id=533&email=${encodeURIComponent(email)}`;
+    console.log(apiUrl);
 
-    // try {
-    //   const response = axios.post(apiUrl);
-    //   console.log("Respuesta de la API:", response.data);
-    // } catch (error) {
-    //   console.error("Error al enviar datos:", error);
-    // }
+    try {
+      const response = await axios.post(apiUrl);
+      console.log("Respuesta de la API:", response.data.message);
+      
+      const localStorageData = localStorage.getItem("allResults");
+
+      // Segundo post (store-result) 
+      const data_result_post = {
+        client_id: 533,
+        survey_id: response.data.message.id,
+        data_all: localStorageData +"999999999999999999999999999999999999999999999999999999999999999999999999999999"
+      }
+      console.log(data_result_post)
+
+      const secondApiUrl = `https://proxy-server-cf.onrender.com/proxy/store-result?client_id=533&survey_id=${data_result_post.survey_id}&data_all=${encodeURIComponent(data_result_post.data_all)}`
+      const secondResponse = await axios.post(secondApiUrl);
+      console.log("Respuesta del segundo POST:", secondResponse.data);
+
+    
+    } catch (error) {
+      console.error("Error al enviar datos:", error);
+    }
+
+  
+    
   });
-
-  const dataHardcode = {
-    client_id: 533,
-    survey_id: 2113,
-    data_all: ""
-  };
 
   const isLastStep = activeStep === maxSteps - 1;
 
@@ -88,28 +101,8 @@ function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
               if (isLastStep) {
                 survey.completeLastPage();
 
-
-                dataHardcode.data_all =
-                  allResults +
-                  "999999999999999999999999999999999999999999999999999999999999999999999999";
-                console.log(dataHardcode);
                 // Primer post para conseguir el id
 
-                // const apiUrl = `https://loving-germain.82-223-101-75.plesk.page/api/store-result?client_id=533&survey_id=2114&data_all=${encodeURIComponent(
-                //   dataHardcode.data_all
-                // )}`;
-                // console.log(apiUrl);
-                // // Realiza la solicitud GET a la API
-                // fetch(apiUrl)
-                //   .then((response) => response.json())
-                //   .then((responseData) => {
-                //     // Manejar la respuesta de la API aquí
-                //     console.log("Respuesta de la API:", responseData);
-                //   })
-                //   .catch((error) => {
-                //     // Manejar errores de la solicitud aquí
-                //     console.error("Error al enviar datos:", error);
-                //   });
               } else {
                 survey.completeLastPage();
               }
