@@ -54,11 +54,9 @@ export default function TextMobileStepper() {
   }, [allResults]);
 
   return (
-    <Box sx={{ maxWidth: 800, flexGrow: 1, margin: "auto", marginTop:"100px"}}>
-      <Paper elevation={3} sx={{ padding: "20px", borderRadius: "10px", background:"red"}}>
-        <Typography variant="h6" gutterBottom>
-          Test Cultural
-        </Typography>
+    <Box sx={{ maxWidth: 800, flexGrow: 1, margin: "auto"}}>
+      <img src="../../../assets/logoCF_text.png" alt="Logo CulturaFit" />
+      <Paper elevation={3} sx={{ padding: "20px", borderRadius: "10px"}}>
         <SurveyComponent
           data={currentQuestions[activeStep]}
           activeStep={activeStep}

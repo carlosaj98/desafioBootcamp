@@ -32,6 +32,17 @@ function SurveyComponent({
     onNext(result);
   });
 
+  survey.onValueChanged.add((sender, options) => {
+    const container = document.querySelector(".sv-ranking__container.sv-ranking__container--to");
+    if (container) {
+      const items = container.getElementsByClassName("sv-ranking-item__index");
+      Array.from(items).forEach((item, index) => {
+        item.innerHTML = items.length - index;
+      });
+    }
+  });
+
+
   const dataHardcode = {
     client_id: 533,
     survey_id: 2113,
@@ -47,7 +58,7 @@ function SurveyComponent({
         showNavigationButtons="none"
         choicesOrder="one"
         allResults
-        
+
       />
 
       <MobileStepper
@@ -55,7 +66,7 @@ function SurveyComponent({
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
-        
+
         nextButton={
           <Button
             size="large"
