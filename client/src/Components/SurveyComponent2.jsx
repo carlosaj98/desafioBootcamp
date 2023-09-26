@@ -86,7 +86,7 @@ function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
 
   return (
     <>
-      <Survey model={survey} showNavigationButtons="none" choicesOrder="one" />
+      <Survey model={survey} showNavigationButtons="none" choicesOrder="one" sx={{background:"red"}}/>
 
       <MobileStepper
         variant="text"
