@@ -13,7 +13,7 @@ export default function TextMobileStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [newResult, setNewResult] = React.useState("");
   const [allResults, setAllResults] = React.useState(""); // Inicializar allResults con el valor de newResult
-  console.log(allResults, "aqui esta");
+  
   useEffect(() => {
     setAllResults((prevResults) => prevResults + newResult);
   }, [newResult]);
