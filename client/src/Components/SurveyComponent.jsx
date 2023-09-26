@@ -47,6 +47,7 @@ function SurveyComponent({
         showNavigationButtons="none"
         choicesOrder="one"
         allResults
+        
       />
 
       <MobileStepper
@@ -54,6 +55,7 @@ function SurveyComponent({
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
+        
         nextButton={
           <Button
             size="large"
