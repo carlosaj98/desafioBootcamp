@@ -10,6 +10,7 @@ import { useTheme } from "@mui/material/styles";
 import { themeJson } from "../theme";
 import { useNavigate } from "react-router-dom";
 
+import {isScreenWideEnough} from "../Data/json"
 
 function SurveyComponent({
   data,
@@ -17,12 +18,24 @@ function SurveyComponent({
   activeStep,
   onNext,
   onBack,
-  allResults
+  allResults,
 }) {
   // console.log(allResults);
   const survey = new Model(data);
+  
+      //   survey.data = {
+      //     [data.elements[activeStep].name]:[
+      //         1,
+      //         2,
+      //         6,
+      //         5,
+      //         4,
+      //         3
+      //     ]
+      // }
+  
   const theme = useTheme();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // You can delete the line below if you do not use a customized theme
 
@@ -33,7 +46,11 @@ function SurveyComponent({
   });
 
   survey.onValueChanged.add((sender, options) => {
-    const container = document.querySelector(".sv-ranking__container.sv-ranking__container--to");
+    if(!isScreenWideEnough()) return
+   
+    const container = document.querySelector(
+      ".sv-ranking__container.sv-ranking__container--to"
+    );
     if (container) {
       const items = container.getElementsByClassName("sv-ranking-item__index");
       Array.from(items).forEach((item, index) => {
@@ -41,12 +58,23 @@ function SurveyComponent({
       });
     }
   });
-
+  
+  setTimeout(() => {
+    survey.onValueChanged.add((sender, options) => {
+      if (isScreenWideEnough()) return;
+      const container = sender.rootElement.querySelectorAll(
+        ".sv-ranking-item__index.sd-ranking-item__index"
+      );
+      container.forEach((item, index) => {
+        item.innerText = container.length - index - 1;
+      });
+    });
+  }, 4000); 
 
   const dataHardcode = {
     client_id: 533,
     survey_id: 2113,
-    data_all: ""
+    data_all: "",
   };
 
   const isLastStep = activeStep === maxSteps - 1;
@@ -58,7 +86,6 @@ function SurveyComponent({
         showNavigationButtons="none"
         choicesOrder="one"
         allResults
-
       />
 
       <MobileStepper
@@ -66,7 +93,6 @@ function SurveyComponent({
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
-
         nextButton={
           <Button
             size="large"
@@ -74,7 +100,7 @@ function SurveyComponent({
               if (isLastStep) {
                 survey.completeLastPage();
                 //Ir a pagina de registro
-                navigate("/register", { replace: true })
+                navigate("/register", { replace: true });
                 // fetch();
                 dataHardcode.data_all =
                   allResults +
