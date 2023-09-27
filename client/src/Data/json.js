@@ -21,7 +21,7 @@ const questionsWideScreen = [
         ],
         selectToRankEnabled: true,
         selectToRankAreasLayout: "horizontal",
-        minSelectedChoices: 1,
+        minSelectedChoices: 6,
         maxSelectedChoices: 6
       }
     ],
@@ -43,7 +43,7 @@ const questionsWideScreen = [
         ],
         selectToRankEnabled: true,
         selectToRankAreasLayout: "horizontal",
-        minSelectedChoices: 1,
+        minSelectedChoices: 6,
         maxSelectedChoices: 6
       }
     ],
@@ -65,7 +65,7 @@ const questionsWideScreen = [
         ],
         selectToRankEnabled: true,
         selectToRankAreasLayout: "horizontal",
-        minSelectedChoices: 1,
+        minSelectedChoices: 6,
         maxSelectedChoices: 6
       }
     ],
@@ -87,7 +87,7 @@ const questionsWideScreen = [
         ],
         selectToRankEnabled: true,
         selectToRankAreasLayout: "horizontal",
-        minSelectedChoices: 1,
+        minSelectedChoices: 6,
         maxSelectedChoices: 6
       }
     ],
@@ -109,7 +109,7 @@ const questionsWideScreen = [
         ],
         selectToRankEnabled: true,
         selectToRankAreasLayout: "horizontal",
-        minSelectedChoices: 1,
+        minSelectedChoices: 6,
         maxSelectedChoices: 6
       }
     ],
@@ -131,7 +131,7 @@ const questionsWideScreen = [
         ],
         selectToRankEnabled: true,
         selectToRankAreasLayout: "horizontal",
-        minSelectedChoices: 1,
+        minSelectedChoices: 6,
         maxSelectedChoices: 6
       }
     ],

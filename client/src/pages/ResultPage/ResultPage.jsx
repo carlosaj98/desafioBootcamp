@@ -80,7 +80,7 @@ function ResultPage() {
       labels: data[0].arqTITULO,
       datasets: [
         {
-          label: "You",
+         
           data: data[0].ARQind,
           backgroundColor: "rgba(75, 192, 192, 0.2)",
           borderColor: "rgba(75, 192, 192, 1)",
@@ -95,6 +95,7 @@ function ResultPage() {
       options: {
         plugins: {
           legend: {
+           
             display: false,
           },
           responsive: true,
