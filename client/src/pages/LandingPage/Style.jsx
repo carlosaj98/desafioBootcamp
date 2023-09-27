@@ -7,6 +7,7 @@ const MainContainer = styled("div")({
   backgroundImage: "url(/wave.png)",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
+  backgroundPosition: "bottom center",
 
   "#content-container": {
     height: "100%",
@@ -24,12 +25,12 @@ const MainContainer = styled("div")({
 
   h1: {
     fontWeight: "bold",
-    color: "var(--primary-color)",
+    color: "var(--secondary-color)",
     fontFamily: "var(--primary-font)",
   },
 
   "h1 span": {
-    color: "var(--secondary-color)",
+    color: "var(--primary-color)",
   },
 
   "#first-description": {
