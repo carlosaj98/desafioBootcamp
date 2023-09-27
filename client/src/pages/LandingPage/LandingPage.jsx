@@ -1,13 +1,14 @@
 import { Container, Button, Typography, Link, Stack, Box } from "@mui/material"
 import { useMediaQuery } from "@mui/material"
 import { Link as LinkReact } from "react-router-dom"
+import 'animate.css'
 import Styled from "./Style"
 function LandingPage() {
   const isMobileScreen = useMediaQuery("(max-width: 600px)")
 
   return (
     <Styled.MainContainer id="principal-container">
-      <Container id="content-container" maxWidth="100vw">
+      <Container id="content-container" className="animate__animated animate__zoomIn" maxWidth="100vw">
         <Stack
           component="main"
           alignItems="center"
@@ -46,7 +47,7 @@ function LandingPage() {
               lorem commodo eu.
             </Typography>
             <LinkReact to="/form">
-              <Button variant="contained" sx={{ width: "fit-content", fontSize: { lg: "1.15rem", xs: "1rem" }, padding:{lg:"18px 100px", xs:"18px 75px"} }}>
+              <Button variant="contained" className="heartbeat" sx={{ width: "fit-content", fontSize: { lg: "1.15rem", xs: "1rem" }, padding:{lg:"18px 100px", xs:"18px 75px"} }}>
                 Iniciar el test
               </Button>
             </LinkReact>

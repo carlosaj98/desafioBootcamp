@@ -6,8 +6,7 @@ const MainContainer = styled("div")({
   backgroundColor: "white",
   backgroundImage: "url(/wave.png)",
   backgroundRepeat: "no-repeat",
-  backgroundSize:"cover",
-
+  backgroundSize: "cover",
 
   "#content-container": {
     height: "100%",
@@ -15,36 +14,33 @@ const MainContainer = styled("div")({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent:"space-between",
+    justifyContent: "space-between",
   },
 
-
-
-  "#logo img":{
+  "#logo img": {
     width: "100%",
-    height: "auto"
+    height: "auto",
   },
 
   h1: {
-
     fontWeight: "bold",
     color: "var(--primary-color)",
-    fontFamily:"var(--primary-font)",
+    fontFamily: "var(--primary-font)",
   },
 
-  "h1 span":{
+  "h1 span": {
     color: "var(--secondary-color)",
   },
 
   "#first-description": {
-    fontFamily:"var(--secondary-font)",
-    color:"var(--secondary-color)",
+    fontFamily: "var(--secondary-font)",
+    color: "var(--secondary-color)",
     marginBottom: "24px",
   },
 
-  "#second-description":{
-    fontFamily:"var(--primary-font)",
-    color:"var(--secondary-color)",
+  "#second-description": {
+    fontFamily: "var(--primary-font)",
+    color: "var(--secondary-color)",
     maxWidth: "800px",
     marginBottom: "24px",
   },
@@ -52,8 +48,7 @@ const MainContainer = styled("div")({
   "#content-container button": {
     backgroundColor: "var(--primary-color)",
     borderRadius: "30px",
-    fontFamily:"var(--secondary-font)",
-
+    fontFamily: "var(--secondary-font)",
   },
 
   footer: {
@@ -75,7 +70,20 @@ const MainContainer = styled("div")({
     fontFamily: "var(--primary-font)",
   },
 
+  "@keyframes heartbeat": {
+    from: {
+      transform: "scale(1)",
+      transformOrigin: "center center",
+      animationTimingFunction: "ease-out",
+    },
+    "10%": { transform: "scale(.91)", animationTimingFunction: "ease-in" },
+    "17%": { transform: "scale(.98)", animationTimingFunction: "ease-out" },
+    "33%": { transform: "scale(.87)", animationTimingFunction: "ease-in" },
+    "50%": { transform: "scale(1)", animationTimingFunction: "ease-out" },
+  },
 
+  ".heartbeat": { animation: "heartbeat 1.5s ease-in-out 2s infinite both" },
+  ".heartbeat:hover": { animation: "heartbeat 0s" },
 })
 
 export default { MainContainer }
