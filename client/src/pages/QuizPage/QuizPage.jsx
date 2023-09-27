@@ -17,13 +17,12 @@ export default function TextMobileStepper() {
   useEffect(() => {
     setAllResults((prevResults) => prevResults + newResult);
   }, [newResult]);
-  console.log(isScreenWideEnough())
+  
   const currentQuestions = isScreenWideEnough() ? questionsWideScreen : questionsNarrowScreen;
   const maxSteps = isScreenWideEnough() ? questionsWideScreen.length : questionsNarrowScreen.length;
 
   const handleNext = async (newResult) => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
     setAllResults((prevResults) => {
       const updatedResults = prevResults + newResult;
       // Muestra el valor actualizado de newResult y allResults
@@ -31,18 +30,23 @@ export default function TextMobileStepper() {
     });
   };
 
+  
+  //Logica boton Back
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setAllResults((prevResults) => {
+      const updatedResults = prevResults.slice(0, -6); 
+      return updatedResults;
+    });
   };
+
+
   //LocalStorage
-  // Cargar el valor inicial de allResults desde localStorage (si existe)
   useEffect(() => {
     const savedAllResults = localStorage.getItem("allResults");
     if (savedAllResults && savedAllResults.length !== 0) {
       setAllResults("");
-      console.log(allResults, "otro");
     } else {
-      // Si no hay un valor en localStorage, inicializa allResults a una cadena vacía
       setAllResults("");
     }
   }, []);
@@ -50,7 +54,7 @@ export default function TextMobileStepper() {
   // Cuando actualices allResults, también guárdalo en localStorage
   useEffect(() => {
     localStorage.setItem("allResults", allResults);
-    console.log(allResults, "localstorage");
+    
   }, [allResults]);
 
   return (

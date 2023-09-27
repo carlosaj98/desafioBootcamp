@@ -9,7 +9,7 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { useTheme } from "@mui/material/styles";
 import { themeJson } from "../theme";
 
-import axios from "axios"
+import axios from "axios";
 
 function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
   const [allResults, setAllResults] = React.useState("");
@@ -28,65 +28,68 @@ function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
     console.log(allResults, "SurveyComponet2");
   }, [allResults]);
 
-
   const survey = new Model(data);
   const theme = useTheme();
 
   // You can delete the line below if you do not use a customized theme
 
   survey.applyTheme(themeJson);
-  survey.onComplete.add(async(sender, options) => {
-    const data_user = JSON.stringify(sender.data, null, 3)
+  survey.onComplete.add(async (sender, options) => {
+    const data_user = JSON.stringify(sender.data, null, 3);
     //Hacer el post para el registro y obtener el id(survey_id)
     const data_user_obj = JSON.parse(data_user);
     const email = data_user_obj.email;
 
     const data_user_post = {
       client_id: "533",
-      email: email
-    }
-    console.log(data_user_post)
+      email: email,
+    };
+    console.log(data_user_post);
 
-    const apiUrl = `https://proxy-server-cf.onrender.com/proxy/store-client?client_id=533&email=${encodeURIComponent(email)}`;
+    const apiUrl = `https://culturalfit.es/api/store-client?client_id=533&email=${encodeURIComponent(
+      email
+    )}`;
     console.log(apiUrl);
 
     try {
       const response = await axios.post(apiUrl);
       console.log("Respuesta de la API:", response.data.message);
-      
+
       const localStorageData = localStorage.getItem("allResults");
 
-      // Segundo post (store-result) 
+      // Segundo post (store-result)
       const data_result_post = {
         client_id: 533,
         survey_id: response.data.message.id,
-        data_all: localStorageData +"999999999999999999999999999999999999999999999999999999999999999999999999999999"
-      }
-      console.log(data_result_post)
+        data_all:
+          localStorageData +
+          "999999999999999999999999999999999999999999999999999999999999999999999999999999",
+      };
+      console.log(data_result_post);
 
-      const secondApiUrl = `https://proxy-server-cf.onrender.com/proxy/store-result?client_id=533&survey_id=${data_result_post.survey_id}&data_all=${encodeURIComponent(data_result_post.data_all)}`
+      const secondApiUrl = `https://culturalfit.es/api/store-result?client_id=533&survey_id=${
+        data_result_post.survey_id
+      }&data_all=${encodeURIComponent(data_result_post.data_all)}`;
       const secondResponse = await axios.post(secondApiUrl);
-      console.log("Respuesta del segundo POST:", secondResponse.data);
+      console.log("Respuesta del segundo POST:", secondResponse.data.message.token);
+      //Aqui necesito almacenar en localstorage la data de token
+      const token = secondResponse.data.message.token;
 
-    
+      // Almacena el token en localStorage
+      localStorage.setItem("token", token);
     } catch (error) {
       console.error("Error al enviar datos:", error);
     }
-
-  
-    
   });
-
   const isLastStep = activeStep === maxSteps - 1;
-
-  // Utiliza un useEffect para imprimir allResults cuando cambie
-  React.useEffect(() => {
-    console.log("Envio de data", allResults);
-  }, [allResults]);
-
   return (
     <>
-      <Survey model={survey} showNavigationButtons="none" choicesOrder="one" sx={{background:"red"}}/>
+      <Survey
+        model={survey}
+        showNavigationButtons="none"
+        choicesOrder="one"
+        sx={{ background: "red" }}
+      />
 
       <MobileStepper
         variant="text"
@@ -102,7 +105,6 @@ function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
                 survey.completeLastPage();
 
                 // Primer post para conseguir el id
-
               } else {
                 survey.completeLastPage();
               }
