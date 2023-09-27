@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 import { LandingPage, ResultPage, QuizPage, RegisterPage } from "./pages"
-
+// import PdfButton from "./pages/ResultPage/PdfButton"
 const router = createBrowserRouter([
     {
         path: "/",
@@ -18,6 +18,7 @@ const router = createBrowserRouter([
         path: "/register",
         element: <RegisterPage />,
     },
+
    
 ])
 
