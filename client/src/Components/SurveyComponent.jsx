@@ -10,7 +10,7 @@ import { useTheme } from "@mui/material/styles";
 import { themeJson } from "../theme";
 import { useNavigate } from "react-router-dom";
 
-import {isScreenWideEnough} from "../Data/json"
+import { isScreenWideEnough } from "../Data/json"
 
 function SurveyComponent({
   data,
@@ -22,18 +22,24 @@ function SurveyComponent({
 }) {
   // console.log(allResults);
   const survey = new Model(data);
-  
-      //   survey.data = {
-      //     [data.elements[activeStep].name]:[
-      //         1,
-      //         2,
-      //         6,
-      //         5,
-      //         4,
-      //         3
-      //     ]
-      // }
-  
+
+  const stepData = localStorage.getItem('allResults').split('').slice(activeStep * 6, activeStep * 6 + 6)
+
+  console.log(stepData)
+
+  if (stepData.length) {
+    survey.data = {
+      [data.elements[activeStep].name]: [
+        1,
+        2,
+        6,
+        5,
+        4,
+        3
+      ]
+    }
+  }
+
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -46,8 +52,8 @@ function SurveyComponent({
   });
 
   survey.onValueChanged.add((sender, options) => {
-    if(!isScreenWideEnough()) return
-   
+    if (!isScreenWideEnough()) return
+
     const container = document.querySelector(
       ".sv-ranking__container.sv-ranking__container--to"
     );
@@ -58,18 +64,20 @@ function SurveyComponent({
       });
     }
   });
-  
-  setTimeout(() => {
-    survey.onValueChanged.add((sender, options) => {
+
+
+  survey.onValueChanged.add((sender, options) => {
+    setTimeout(() => {
       if (isScreenWideEnough()) return;
       const container = sender.rootElement.querySelectorAll(
         ".sv-ranking-item__index.sd-ranking-item__index"
       );
       container.forEach((item, index) => {
-        item.innerText = container.length - index - 1;
+        item.innerText = container.length - index;
       });
-    });
-  }, 4000); 
+    }, 0);
+  });
+
 
   const dataHardcode = {
     client_id: 533,

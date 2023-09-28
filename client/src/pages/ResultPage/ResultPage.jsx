@@ -1,3 +1,7 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { styled } from "@mui/material/styles";
+import { Chart } from "chart.js/auto";
 import {
   Accordion,
   AccordionSummary,
@@ -17,11 +21,6 @@ import {
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import { Chart } from "chart.js/auto";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { styled } from "@mui/material/styles";
 import logoIcon from "../../../assets/logoCF_text.png";
 import goalIcon from "../../../assets/goalssvg.png";
 import innoIcon from "../../../assets/inno.png";
@@ -31,165 +30,81 @@ import digitalIcon from "../../../assets/digital.png";
 import normsIcon from "../../../assets/norms.png";
 
 function ResultPage() {
-  const [data, setData] = useState()
-  // const data = [
-  //   {
-  //     ARQind: [17.46, 14.29, 22.22, 18.25, 12.7, 15.08],
-  //     arqTITULO: ["People", "Innovation", "Goals", "Norms", "Digital", "ESG"],
-  //     arqTEXTO: [
-  //       "Mentalidad enfocada en el bienestar y el desarrollo de las personas, el mantenimiento de un clima laboral positivo y unas buenas relaciones de trabajo. Ello la lleva a que la cohesión y la satisfacción propia y de los demás primen sobre otros objetivos. Áreas de alto encaje: Recursos Humanos (RRHH), Servicio al Cliente, Comunicaciones Corporativas, Relaciones Públicas.",
-  //       "Mentalidad dinámica, creativa, autónoma, orientada a la innovación, y que presente tolerancia al riesgo y atrevimiento a la hora de actuar. Promueve la generación de ideas innovadoras, el cambio positivo y la disposición para tomar riesgos. Áreas de alto encaje: Desarrollo de Productos , Investigación y Desarrollo (I+D), Tecnología de la Información (TI), Consultoría.",
-  //       "Mentalidad caracterizada por una orientación clara hacia los resultados, la excelencia y competitidad. Resuelve problemas de manera pragmática con ambición y habilidades de liderazgo. Enfoque en el logro de metas y objetivos, impulsando el éxito y la eficacia en el trabajo. Áreas de alto encaje: Ventas, Marketing, Desarrollo Empresarial, Gestión de Proyectos.",
-  //       "Mentalidad orientada hacia el cumplimiento de las normas y la burocracia, enfatizando la seguridad, la predictibilidad, el orden y el control. Especial apego a la existencia de normas estrictas, procedimientos, manuales, y por mantener una noción muy estricta de la jerarquía. Áreas de alto encaje: Finanzas y Contabilidad, Jurídico y Cumplimiento, Control de Calidad, Compras.",
-  //       "Mentalidad de gran apertura al cambio,  analítica y que enfatiza la adaptación al cliente mediante el aprendizaje continuo y la tolerancia al fallo. Ello la lleva a fomentar y valorar especialmente la cooperación y disposición tantio propia como de sus colaboradores para compartir conocimientos. Áreas de alto encaje: Transformación Digital, Sistemas, Experiencia del Usuario (UX), Diseño de Interfaz de Usuario (UI).",
-  //       "Mentalidad caracterizada por un alto compromiso para con la responsabilidad social y la sostenibilidad. Ello la conduce a esforzarse para lograr unos objetivos sociales y a generar un impacto positivo en el medio ambiente y la sociedad. Áreas de alto encaje: Desarrollo Sostenible, Responsabilidad Social Corporativa (RSC), Asuntos Públicos, Gobierno Corporativo.",
-  //     ],
-  //     valoresTITULO: [
-  //       "Ambición",
-  //       "Autonomía",
-  //       "Eficiencia",
-  //       "Excelencia",
-  //       "Orientación a resultados",
-  //       "Respeto",
-  //     ],
-  //     valoresTEXTO: [
-  //       "Perseguirá el alcance de metas valiosas y relevantes. Estará motivada por el crecimiento personal y profesional, y buscará desafiarse y conseguir nuevos logros.",
-  //       "Expresará sus opiniones libremente, participará en decisiones y actuará según su criterio. Mostrará autonomía y confianza para contribuir con su perspectiva.",
-  //       "Buscará lograr las metas establecidas con el menor consumo de recursos posible. Será consciente de optimizar los recursos disponibles en la organización.",
-  //       "Cumplirá con los requisitos y especificaciones establecidas con un alto compromiso y esfuerzo, buscando alcanzar los más altos estándares de calidad.",
-  //       "Actuará con velocidad y enfoque para cumplir los objetivos establecidos, tomando las acciones correctivas precisas de la forma más rápida y eficiente.",
-  //       "Valorará y reconocerá a las personas y las cosas. Tratará a los demás con cortesía, consideración y respeto. Promoverá un entorno inclusivo y respetuoso.",
-  //     ],
-  //     match1_name: "ENAGAS",
-  //     match1_kpi: "85%",
-  //     match2_name: "FERROVIAL",
-  //     match2_kpi: "68%",
-  //   },
-  // ];
-  // const matchData = [
-  //   {
-  //     name: data[0].match1_name,
-  //     kpi: data[0].match1_kpi,
-  //   },
-  //   {
-  //     name: data[0].match2_name,
-  //     kpi: data[0].match2_kpi,
-  //   },
-  // ];
-  // useEffect(() => {
-  //   const radarData = {
-  //     labels: data[0].arqTITULO,
-  //     datasets: [
-  //       {
+  const [data, setData] = useState(null);
 
-  //         data: data[0].ARQind,
-  //         backgroundColor: "rgba(75, 192, 192, 0.2)",
-  //         borderColor: "rgba(75, 192, 192, 1)",
-  //         borderWidth: 1,
-  //       },
-  //     ],
-  //   };
-  //   Chart.defaults.font.family = "Montserrat";
-  //   const radarConfig = {
-  //     type: "radar",
-  //     data: radarData,
-  //     options: {
-  //       plugins: {
-  //         legend: {
+  useEffect(() => {
+    const fetchData = async () => {
+      const localStorageData = localStorage.getItem("token");
+      try {
+        const response = await axios.get(
+          `https://culturalfit.es/api/tb_perfil/${localStorageData}`
+        );
+        const responseData = response.data;
+        setData(responseData);
+      } catch (error) {
+        console.error("Error al cargar la data desde la API:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  //           display: false,
-  //         },
-  //         responsive: true,
-  //       },
-  //       scales: {
-  //         r: {
-  //           ticks: {
-  //             display: false,
-  //           },
-  //         },
-  //       },
-  //     },
-  //   };
+  useEffect(() => {
+    if (data) {
 
-  //   const radarCanvas = document.getElementById("radarChart");
-  //   new Chart(radarCanvas, radarConfig);
-  // }, []);
-  useEffect(() =>{
-  const localStorageData = localStorage.getItem("token");
-
-
-    axios
-      .get(`https://culturalfit.es/api/tb_perfil/${localStorageData}`)
-      .then((response) => {
-     
-        console.log(response.data, "aqui esta el get");
-        setData(response.data);
-       
-        if (data.length > 0) {
-          const radarData = {
-            labels: data[0].arqTITULO,
-            datasets: [
-              {
-                label: "",
-                data: data[0].ARQind,
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)",
-                borderWidth: 1,
-              },
-            ],
-          };
-          const radarConfig = {
-            type: "radar",
-            data: radarData,
-            options: {
-              plugins: {
-                legend: {
-                  labels: {
-                    fontFamily: "var(--primary-font)",
-                    responsive: true,
-                  },
-                },
-              },
-              scales: {
-                r: {
-                  label: { display: false },
-                  pointLabels: {
-                    fontFamily: "var(--primary-font)",
-                  },
-                  ticks: {
-                    display: false,
-                  },
-                },
+      // Configurar el gráfico de radar con Chart.js
+      const radarData = {
+        labels: data.arqTITULO || [],
+        datasets: [
+          {
+            data: data.ARQind || [],
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+            borderColor: "rgba(75, 192, 192, 1)",
+            borderWidth: 1,
+          },
+        ],
+      };
+      Chart.defaults.font.family = "Montserrat";
+      const radarConfig = {
+        type: "radar",
+        data: radarData,
+        options: {
+          plugins: {
+            legend: {
+              display: false,
+            },
+            responsive: true,
+          },
+          scales: {
+            r: {
+              ticks: {
+                display: false,
               },
             },
-          };
-          const radarCanvas = document.getElementById("radarChart");
-          new Chart(radarCanvas, radarConfig);
-        }
-      }, [data]);
-      const matchData = data.length > 0
-        ? [
-            {
-              name: data[0].match1_name,
-              kpi: data[0].match1_kpi,
-            },
-            {
-              name: data[0].match2_name,
-              kpi: data[0].match2_kpi,
-            },
-          ]
-        : [];
-      const ARQind = data.length > 0 ? data[0].ARQind : [];
-      const SortedARQind = ARQind.slice().sort((a, b) => b - a);
-  )
-   
-      .catch((error) =>
-        console.error("Error al cargar la data desde la API:", error)
-      );
-        []);
+          },
+        },
+      };
+      const radarCanvas = document.getElementById("radarChart");
+      new Chart(radarCanvas, radarConfig);
+    }
+  }, [data])
 
+  const matchData = data 
+    ? [
+      {
+        name: data.match1_name || "",
+        kpi: data.match1_kpi || "",
+      },
+      {
+        name: data.match2_name || "",
+        kpi: data.match2_kpi || "",
+      },
+    ]
+    : [];
 
- 
+    
+
+  const ARQind = data  ? data.ARQind || [] : [];
+  const SortedARQind = ARQind.slice().sort((a, b) => b - a);
 
   const accordionStyle = {
     boxShadow: "none",
@@ -197,7 +112,6 @@ function ResultPage() {
 
   const tableStyle = {
     maxWidth: "70%",
-
     boxShadow: "none",
   };
 
@@ -209,7 +123,7 @@ function ResultPage() {
 
   const typographyStyle = {
     fontFamily: "var(--secondary-font)",
-    color: "var--(secondary-color)",
+    color: "var(--secondary-color)",
     fontWeight: "bold",
   };
 
@@ -315,17 +229,17 @@ function ResultPage() {
             <Accordion key={index} style={accordionStyle}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  {iconsByTitle[arqTITULO[ARQind.indexOf(valor)]]}
+                  {iconsByTitle[data?.arqTITULO?.[ARQind.indexOf(valor)]]}
                   <Typography
                     style={{ marginLeft: "10px", ...typographyStyleAccordion }}
                   >
-                    {arqTITULO[ARQind.indexOf(valor)]}
+                    {data?.arqTITULO?.[ARQind.indexOf(valor)]}
                   </Typography>
                 </div>
               </AccordionSummary>
               <CustomAccordionDetails>
                 <Typography fontFamily={"var(--primary-font)"}>
-                  {arqTEXTO[ARQind.indexOf(valor)]}
+                  {data?.arqTEXTO?.[ARQind.indexOf(valor)]}
                 </Typography>
               </CustomAccordionDetails>
             </Accordion>
@@ -339,7 +253,7 @@ function ResultPage() {
             borderRadius: "8px",
             boxShadow: "none",
             backgroundColor: "var(--secondary-color)",
-            fontFamily: "var--(primary-font)",
+            fontFamily: "var(--primary-font)",
           }}
         >
           <SvgIcon
@@ -369,7 +283,7 @@ function ResultPage() {
         <TableContainer component={Paper} style={tableStyle}>
           <Table>
             <TableBody>
-              {data[0].valoresTITULO.map((title, index) => (
+              {data?.valoresTITULO?.map((title, index) => (
                 <TableRow
                   key={index}
                   style={{ display: "flex", flexDirection: "column" }}
@@ -383,9 +297,8 @@ function ResultPage() {
                   >
                     {title}
                   </TableCell>
-
                   <TableCell style={tableCellStyle}>
-                    {data[0].valoresTEXTO[index]}
+                    {data?.valoresTEXTO?.[index]}
                   </TableCell>
                 </TableRow>
               ))}
