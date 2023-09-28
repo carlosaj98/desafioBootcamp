@@ -30,6 +30,7 @@ import digitalIcon from "../../../assets/digital.png"
 import normsIcon from "../../../assets/norms.png"
 import {
     PDFViewer,
+    PDFDownloadLink,
     Document,
     Page,
     Text,
@@ -299,8 +300,8 @@ function ResultPage() {
             const localStorageData = localStorage.getItem("token")
             try {
                 const response = await axios.get(
-                    // `https://culturalfit.es/api/tb_perfil/${localStorageData}`
-                    "https://culturalfit.es/api/tb_perfil/CF-16956394065365629363604067083"
+                    `https://culturalfit.es/api/tb_perfil/${localStorageData}`
+                    // "https://culturalfit.es/api/tb_perfil/CF-16956394065365629363604067083"
                 )
                 const responseData = response.data
                 setData(responseData)
@@ -421,13 +422,6 @@ function ResultPage() {
     }
     return (
         <Stack height={"100%"} width={"100%"} padding={"20px"}>
-            <div>
-                <PDFViewer
-                    width="100%"
-                    height="500px"
-                    children={<PDF />}
-                ></PDFViewer>
-            </div>
             <Box>
                 <img src={logoIcon} alt="culturalFit" style={logoStyle} />
             </Box>
@@ -552,22 +546,24 @@ function ResultPage() {
                 </Box>
             </Stack>
             <Box display={"flex"} justifyContent={"center"}>
-                <Button
-                    variant="contained"
-                    style={{
-                        borderRadius: "8px",
-                        boxShadow: "none",
-                        backgroundColor: "var(--secondary-color)",
-                        fontFamily: "var(--primary-font)",
-                    }}
-                >
-                    <SvgIcon
-                        style={{ marginRight: "3px" }}
-                        component={EmailIcon}
-                        inheritViewBox
-                    />
-                    Enviar informe
-                </Button>
+                <PDFDownloadLink document={<PDF/>}>
+                    <Button
+                        variant="contained"
+                        style={{
+                            borderRadius: "8px",
+                            boxShadow: "none",
+                            backgroundColor: "var(--secondary-color)",
+                            fontFamily: "var(--primary-font)",
+                        }}
+                    >
+                        <SvgIcon
+                            style={{ marginRight: "3px" }}
+                            component={EmailIcon}
+                            inheritViewBox
+                        />
+                        Descargar Informe
+                    </Button>
+                </PDFDownloadLink>
             </Box>
             <Box
                 borderBottom={"2px solid var(--secondary-color)"}
