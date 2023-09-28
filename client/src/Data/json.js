@@ -1,5 +1,5 @@
 function isScreenWideEnough() {
-  return window.screen.width >= 5000; 
+  return window.screen.width >= 500; 
 }
 
 const questionsWideScreen = [
