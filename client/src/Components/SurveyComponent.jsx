@@ -24,7 +24,7 @@ function SurveyComponent({
 
   const stepData = localStorage.getItem('allResults')?.split('').slice(activeStep * 6, activeStep * 6 + 6)
 
-  if (stepData.length) {
+  if (stepData) {
     survey.data = {
       [data.elements[activeStep].name]: [
         1,
