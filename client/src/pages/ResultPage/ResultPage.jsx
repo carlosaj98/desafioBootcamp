@@ -31,6 +31,7 @@ import digitalIcon from "../../../assets/digital.png";
 import normsIcon from "../../../assets/norms.png";
 
 function ResultPage() {
+  const [data, setData] = useState()
   // const data = [
   //   {
   //     ARQind: [17.46, 14.29, 22.22, 18.25, 12.7, 15.08],
@@ -80,7 +81,7 @@ function ResultPage() {
   //     labels: data[0].arqTITULO,
   //     datasets: [
   //       {
-         
+
   //         data: data[0].ARQind,
   //         backgroundColor: "rgba(75, 192, 192, 0.2)",
   //         borderColor: "rgba(75, 192, 192, 1)",
@@ -95,7 +96,7 @@ function ResultPage() {
   //     options: {
   //       plugins: {
   //         legend: {
-           
+
   //           display: false,
   //         },
   //         responsive: true,
@@ -113,62 +114,82 @@ function ResultPage() {
   //   const radarCanvas = document.getElementById("radarChart");
   //   new Chart(radarCanvas, radarConfig);
   // }, []);
+  useEffect(() =>{
+  const localStorageData = localStorage.getItem("token");
 
-useEffect(() => {
+
     axios
-      .get(
-        "https://culturalfit.es/proxy/tb_perfil/CF-16902096175254921255614807432"
-      )
+      .get(`https://culturalfit.es/api/tb_perfil/${localStorageData}`)
       .then((response) => {
-        setApiData(response.data);
-        const radarData = {
-             labels: data[0].arqTITULO,
-              datasets: [
-               {
-                 
+     
+        console.log(response.data, "aqui esta el get");
+        setData(response.data);
+       
+        if (data.length > 0) {
+          const radarData = {
+            labels: data[0].arqTITULO,
+            datasets: [
+              {
+                label: "",
                 data: data[0].ARQind,
-           backgroundColor: "rgba(75, 192, 192, 0.2)",
-               borderColor: "rgba(75, 192, 192, 1)",
-               borderWidth: 1,
-               },
-           ],
-           };
-           Chart.defaults.font.family = "Montserrat";
-          const radarConfig = {
-             type: "radar",
-             data: radarData,
-             options: {
-             plugins: {
-                 legend: {
-                   
-                   display: false,
-                 },
-             responsive: true,
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 1,
               },
-               scales: {
-               r: {
+            ],
+          };
+          const radarConfig = {
+            type: "radar",
+            data: radarData,
+            options: {
+              plugins: {
+                legend: {
+                  labels: {
+                    fontFamily: "var(--primary-font)",
+                    responsive: true,
+                  },
+                },
+              },
+              scales: {
+                r: {
+                  label: { display: false },
+                  pointLabels: {
+                    fontFamily: "var(--primary-font)",
+                  },
                   ticks: {
                     display: false,
-                 },
-                 },
-           },
+                  },
+                },
+              },
             },
           };
-        
-        const radarCanvas = document.getElementById("radarChart");
-        new Chart(radarCanvas, radarConfig);
-      })
+          const radarCanvas = document.getElementById("radarChart");
+          new Chart(radarCanvas, radarConfig);
+        }
+      }, [data]);
+      const matchData = data.length > 0
+        ? [
+            {
+              name: data[0].match1_name,
+              kpi: data[0].match1_kpi,
+            },
+            {
+              name: data[0].match2_name,
+              kpi: data[0].match2_kpi,
+            },
+          ]
+        : [];
+      const ARQind = data.length > 0 ? data[0].ARQind : [];
+      const SortedARQind = ARQind.slice().sort((a, b) => b - a);
+  )
+   
       .catch((error) =>
         console.error("Error al cargar la data desde la API:", error)
       );
-  }, []);
-  if (!apiData) {
-    return <div>Cargando...</div>;
-  }
-  const ARQind = data[0].ARQind;
-  const arqTITULO = data[0].arqTITULO;
-  const arqTEXTO = data[0].arqTEXTO;
-  const SortedARQind = ARQind.slice().sort((a, b) => b - a);
+        []);
+
+
+ 
 
   const accordionStyle = {
     boxShadow: "none",

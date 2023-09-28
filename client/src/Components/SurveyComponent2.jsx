@@ -8,12 +8,12 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { useTheme } from "@mui/material/styles";
 import { themeJson } from "../theme";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
   const [allResults, setAllResults] = React.useState("");
-
+  const navigate = useNavigate();
   React.useEffect(() => {
     // Cargar el valor inicial de allResults desde localStorage (si existe)
     const savedAllResults = localStorage.getItem("allResults");
@@ -71,12 +71,16 @@ function SurveyComponent2({ data, maxSteps, activeStep, onNext, onBack }) {
         data_result_post.survey_id
       }&data_all=${encodeURIComponent(data_result_post.data_all)}`;
       const secondResponse = await axios.post(secondApiUrl);
-      console.log("Respuesta del segundo POST:", secondResponse.data.message.token);
+      console.log(
+        "Respuesta del segundo POST:",
+        secondResponse.data.message.token
+      );
       //Aqui necesito almacenar en localstorage la data de token
       const token = secondResponse.data.message.token;
 
       // Almacena el token en localStorage
       localStorage.setItem("token", token);
+      navigate("/result", { replace: true });
     } catch (error) {
       console.error("Error al enviar datos:", error);
     }
