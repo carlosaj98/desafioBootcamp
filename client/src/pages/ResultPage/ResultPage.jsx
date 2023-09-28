@@ -450,8 +450,8 @@ function ResultPage() {
                 gap={{ xs: "40px", sm: "64px" }}
             >
                 <Box
-                    height={{ xs: "250px", sm: "400px" }}
-                    width={{ xs: "200px", sm: "400px" }}
+                    height={{ xs: "300px", sm: "400px" }}
+                    width={{ xs: "300px", sm: "400px" }}
                 >
                     <canvas
                         id="radarChart"
