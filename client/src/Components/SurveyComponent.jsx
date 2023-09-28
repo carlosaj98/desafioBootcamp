@@ -26,7 +26,7 @@ function SurveyComponent({
 
   if (stepData) {
     survey.data = {
-      [data.elements[activeStep].name]: [
+      [data.elements[activeStep]]: [
         1,
         2,
         6,
