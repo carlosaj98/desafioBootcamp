@@ -59,7 +59,7 @@ export default function TextMobileStepper() {
 
   return (
     <Box sx={{ maxWidth: 800, flexGrow: 1, margin: "auto"}}>
-      <img src="../../../assets/logoCF_text.png" alt="Logo CulturaFit" />
+      <img src="/logoCF_text.png" alt="Logo CulturaFit" />
       <Paper elevation={3} sx={{ padding: "20px", borderRadius: "10px"}}>
         <SurveyComponent
           data={currentQuestions[activeStep]}
