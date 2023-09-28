@@ -300,8 +300,8 @@ function ResultPage() {
             const localStorageData = localStorage.getItem("token")
             try {
                 const response = await axios.get(
-                    // `https://culturalfit.es/api/tb_perfil/${localStorageData}`
-                    "https://culturalfit.es/api/tb_perfil/CF-16956394065365629363604067083"
+                    `https://culturalfit.es/api/tb_perfil/${localStorageData}`
+                    // "https://culturalfit.es/api/tb_perfil/CF-16956394065365629363604067083"
                 )
                 const responseData = response.data
                 setData(responseData)
