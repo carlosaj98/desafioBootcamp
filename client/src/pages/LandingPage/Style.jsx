@@ -7,7 +7,7 @@ const MainContainer = styled("div")({
   backgroundImage: "url(/wave.png)",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
-  backgroundPosition: "bottom center",
+
 
   "#content-container": {
     height: "100%",
