@@ -20,12 +20,9 @@ function SurveyComponent({
   onBack,
   allResults,
 }) {
-  // console.log(allResults);
   const survey = new Model(data);
 
-  const stepData = localStorage.getItem('allResults').split('').slice(activeStep * 6, activeStep * 6 + 6)
-
-  console.log(stepData)
+  const stepData = localStorage?.getItem('allResults').split('').slice(activeStep * 6, activeStep * 6 + 6)
 
   if (stepData.length) {
     survey.data = {
