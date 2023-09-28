@@ -3,8 +3,6 @@ import ReactDOM from "react-dom/client"
 import router from "./router"
 import { RouterProvider } from "react-router-dom"
 import { GlobalStyles } from "@mui/material"
-import "@fontsource/rubik/700.css"
-import "@fontsource/montserrat/400.css"
 // import { StyledEngineProvider } from "@mui/material/styles"
 
 const cssNormalize = {
